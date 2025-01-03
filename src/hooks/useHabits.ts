@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase';
-import type { Habit } from '../types/habit';
 
 async function fetchHabits() {
   const { data, error } = await supabase

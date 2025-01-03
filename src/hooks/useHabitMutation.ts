@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { supabase } from '../lib/supabase';
-import type { HabitLog } from '../types/habit';
 
 export function useHabitMutation(habitId: string) {
   const queryClient = useQueryClient();

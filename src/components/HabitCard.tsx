@@ -2,7 +2,6 @@ import { Check } from 'lucide-react';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
 import { HabitCalendar } from './HabitCalendar';
 import type { Habit, HabitLog } from '../types/habit';
 

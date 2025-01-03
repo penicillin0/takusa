@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { supabase } from '../lib/supabase';
-import type { HabitLog } from '../types/habit';
 
 async function fetchHabitLogs(habitId: string, date: Date) {
   const start = startOfMonth(date);

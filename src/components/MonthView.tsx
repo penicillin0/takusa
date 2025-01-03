@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { HabitCard } from './HabitCard';
 import { HabitCardSkeleton } from './HabitCardSkeleton';
 import { useHabitLogs } from '../hooks/useHabitLogs';
 import { useHabitMutation } from '../hooks/useHabitMutation';
-import type { Habit, HabitLog } from '../types/habit';
+import type { Habit } from '../types/habit';
 
 type Props = {
   habits: Habit[];

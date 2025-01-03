@@ -1,6 +1,5 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { Sprout } from 'lucide-react';
 import { Footer } from '../components/Footer';
 import { supabase } from '../lib/supabase';
 
