@@ -112,7 +112,6 @@ function YearCard({ habit, date, months }: YearCardProps) {
       </div>
 
       <button
-        onClick={handleLogUpdate}
         onClick={(e) => {
           e.stopPropagation();
           handleLogUpdate();
