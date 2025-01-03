@@ -28,7 +28,7 @@ export function Header({ date, onDateChange, viewMode }: Props) {
 
   return (
     <header className="bg-white shadow">
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-2 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
           <Link
             to="/dashboard"
