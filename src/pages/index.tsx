@@ -92,13 +92,11 @@ export default function Index() {
           content="Takusaは、日々の習慣を楽しく継続できるトラッキングアプリです。シンプルな操作で習慣を記録し、視覚的に進捗を確認できます。"
         />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:image"
-          content="https://images.unsplash.com/photo-1512314889357-e157c22f938d?w=1200&h=630&fit=crop"
-        />
         <meta name="twitter:card" content="summary_large_image" />
 
-        
+        <meta property="og:image" content="/ogp.png" />
+        <meta property="og:url" content="https://takusa-d3yupradb-penicillin0s-projects.vercel.app/" />
+        <meta property="og:site_name" content="Takusa" />
         {/* <link rel="canonical" href="https://takusa.app" /> */}
       </Helmet>
 
