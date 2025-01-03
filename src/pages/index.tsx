@@ -81,7 +81,7 @@ export default function Index() {
         />
         <meta
           name="keywords"
-          content="習慣化,トラッキング,目標達成,自己管理,生活改善"
+          content="習慣化,トラッキング,目標達成,自己管理,生活改善,Github"
         />
         <meta
           property="og:title"
