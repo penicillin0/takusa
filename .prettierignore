@@ -1,0 +1,10 @@
+dist
+node_modules
+.bolt
+*.log
+.env
+.env.*
+coverage
+build
+.DS_Store
+.git
