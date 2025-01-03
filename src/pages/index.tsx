@@ -54,6 +54,7 @@ const testimonials = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stats = [
   { icon: <Users />, value: '10,000+', label: 'ユーザー' },
   { icon: <CheckCircle />, value: '100万+', label: '達成記録' },
