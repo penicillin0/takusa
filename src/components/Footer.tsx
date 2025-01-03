@@ -19,7 +19,7 @@ export function Footer() {
       );
       if (error) throw error;
       await supabase.auth.signOut();
-    } catch (e) {
+    } catch {
       alert('アカウントの削除に失敗しました');
     }
   };
