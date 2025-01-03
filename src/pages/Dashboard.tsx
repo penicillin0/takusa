@@ -37,8 +37,7 @@ export default function Dashboard() {
         onDateChange={setCurrentDate}
         viewMode={viewMode}
       />
-
-      <main className="max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8 mx-auto">
         <ViewModeSelector mode={viewMode} onChange={handleViewModeChange} />
 
         {viewMode === 'month' ? (
