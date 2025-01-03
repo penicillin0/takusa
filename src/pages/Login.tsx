@@ -25,6 +25,9 @@ export default function Login() {
                     brand: '#6366F1',
                     brandAccent: '#EC4899',
                   },
+                  borderWidths: {
+                    buttonBorderWidth: '0px',
+                  },
                 },
               },
             }}
@@ -35,12 +38,22 @@ export default function Login() {
                   email_label: 'メールアドレス',
                   password_label: 'パスワード',
                   button_label: 'ログイン',
+                  link_text: 'ログインはこちら！',
+                  email_input_placeholder: 'example@example.com'
                 },
                 sign_up: {
                   email_label: 'メールアドレス',
                   password_label: 'パスワード',
                   button_label: '新規登録',
+                  link_text: 'アカウントをお持ちでないですか？',
+                  email_input_placeholder: 'example@example.com'
                 },
+                forgotten_password: {
+                  email_label: 'メールアドレス',
+                  link_text: 'パスワードを忘れましたか？',
+                  button_label: 'リセット',
+                  email_input_placeholder: 'example@example.com'
+                }
               },
             }}
           />
