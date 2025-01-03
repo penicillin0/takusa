@@ -144,7 +144,7 @@ export default function Index() {
               <div className="relative">
                 <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-pink-500/10 blur-xl" />
                 <img
-                  src="/assets/hero.png"
+                  src="/hero.png"
                   alt="Takusaアプリのスクリーンショット"
                   className="relative h-auto w-full rounded-2xl shadow-2xl"
                 />
