@@ -97,7 +97,9 @@ export default function Index() {
           content="https://images.unsplash.com/photo-1512314889357-e157c22f938d?w=1200&h=630&fit=crop"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://takusa.app" />
+
+        
+        {/* <link rel="canonical" href="https://takusa.app" /> */}
       </Helmet>
 
       <header className="sticky top-0 z-50 bg-white/80 shadow-sm backdrop-blur-sm">
