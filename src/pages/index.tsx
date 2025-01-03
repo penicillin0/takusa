@@ -66,6 +66,15 @@ export default function Index() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50/80 via-purple-50/80 to-pink-50/80">
       <Helmet>
         <title>Takusa - 習慣を育てるトラッキングアプリ</title>
+
+        {/* favicon */}
+        <link rel="icon" href="/favicon.ico" />
+
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+
         <meta
           name="description"
           content="Takusaは、日々の習慣を楽しく継続できるトラッキングアプリです。シンプルな操作で習慣を記録し、視覚的に進捗を確認できます。"
