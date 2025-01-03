@@ -55,7 +55,7 @@ export function HabitCalendar({ color, date, logs }: Props) {
         return (
           <div
             key={day.toISOString()}
-            className={`flex aspect-square items-center justify-center rounded-full text-sm ${
+            className={`flex p-1.5 aspect-square items-center justify-center rounded-full text-sm ${
               isCompleted
                 ? `text-white`
                 : isCurrentMonth
