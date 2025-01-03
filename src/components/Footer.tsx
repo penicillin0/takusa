@@ -7,7 +7,9 @@ export function Footer() {
   const isLoginPage = location.pathname === '/';
 
   const handleDeleteAccount = async () => {
-    if (!confirm('本当にアカウントを削除しますか？この操作は取り消せません。')) {
+    if (
+      !confirm('本当にアカウントを削除しますか？この操作は取り消せません。')
+    ) {
       return;
     }
 
@@ -23,34 +25,31 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-white border-t mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-0 sm:justify-between text-sm">
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+    <footer className="mt-auto border-t bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center gap-6 text-sm sm:flex-row sm:justify-between sm:gap-0">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
             <Link
               to="/privacy"
-              className="hover:text-gray-900 transition-colors"
+              className="transition-colors hover:text-gray-900"
             >
               プライバシーポリシー
             </Link>
-            <Link
-              to="/terms"
-              className="hover:text-gray-900 transition-colors"
-            >
+            <Link to="/terms" className="transition-colors hover:text-gray-900">
               利用規約
             </Link>
             {!isLoginPage && (
               <button
                 onClick={handleDeleteAccount}
-                className="text-gray-400 hover:text-red-500 transition-colors"
+                className="text-gray-400 transition-colors hover:text-red-500"
               >
                 アカウントを削除
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-1 text-gray-500 order-first sm:order-none">
-            Made with <Heart className="w-4 h-4 text-pink-500" /> by Takusa
+          <div className="order-first flex items-center gap-1 text-gray-500 sm:order-none">
+            Made with <Heart className="h-4 w-4 text-pink-500" /> by Takusa
           </div>
 
           <div className="text-gray-400">

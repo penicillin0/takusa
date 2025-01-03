@@ -36,16 +36,16 @@ export default function EditHabit() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-indigo-600"></div>
       </div>
     );
   }
 
   if (error || !habit) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="rounded-lg bg-white p-6 shadow-md">
           <p className="text-red-600">{error ?? '習慣が見つかりません'}</p>
         </div>
       </div>

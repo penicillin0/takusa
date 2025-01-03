@@ -39,17 +39,15 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
 
   return (
     <div
-      className="bg-white rounded-lg shadow-md p-4 cursor-pointer hover:shadow-lg transition-shadow"
+      className="cursor-pointer rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
       onClick={handleClick}
     >
-      <div className="flex justify-between items-start mb-4">
+      <div className="mb-4 flex items-start justify-between">
         <div className="flex items-center gap-2">
           <span className="text-xl">{habit.emoji}</span>
           <h3 className="text-lg font-semibold text-gray-900">{habit.name}</h3>
         </div>
-        <span className="text-sm text-gray-600">
-          {logs.length}日達成
-        </span>
+        <span className="text-sm text-gray-600">{logs.length}日達成</span>
       </div>
 
       <HabitCalendar color={habit.color} date={date} logs={logs} />
@@ -57,16 +55,16 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
       <button
         onClick={toggleToday}
         disabled={loading}
-        className={`mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors disabled:opacity-50 ${
+        className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 transition-colors disabled:opacity-50 ${
           isCompletedToday
             ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             : 'text-white hover:opacity-90'
         }`}
         style={{
-          backgroundColor: isCompletedToday ? undefined : habit.color
+          backgroundColor: isCompletedToday ? undefined : habit.color,
         }}
       >
-        <Check className="w-5 h-5" />
+        <Check className="h-5 w-5" />
         {isCompletedToday ? '達成済み' : '今日の達成を記録'}
       </button>
     </div>

@@ -12,13 +12,9 @@ type Props = {
 
 export function MonthView({ habits, date }: Props) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {habits.map((habit) => (
-        <HabitCardWithLogs
-          key={habit.id}
-          habit={habit}
-          date={date}
-        />
+        <HabitCardWithLogs key={habit.id} habit={habit} date={date} />
       ))}
     </div>
   );
@@ -39,14 +35,12 @@ function HabitCardWithLogs({ habit, date }: HabitCardWithLogsProps) {
   };
 
   if (loading) {
-    return (
-      <HabitCardSkeleton />
-    );
+    return <HabitCardSkeleton />;
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="rounded-lg bg-white p-4 shadow-md">
         <p className="text-red-600">エラーが発生しました</p>
       </div>
     );

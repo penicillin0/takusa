@@ -1,13 +1,13 @@
 export function HabitCardSkeleton() {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
-        <div className="h-6 w-32 bg-gray-200 rounded animate-pulse" />
-        <div className="ml-auto h-4 w-16 bg-gray-200 rounded animate-pulse" />
+    <div className="rounded-lg bg-white p-4 shadow-md">
+      <div className="mb-4 flex items-center gap-2">
+        <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200" />
+        <div className="h-6 w-32 animate-pulse rounded bg-gray-200" />
+        <div className="ml-auto h-4 w-16 animate-pulse rounded bg-gray-200" />
       </div>
 
-      <div className="grid grid-cols-7 gap-1 mb-4">
+      <div className="mb-4 grid grid-cols-7 gap-1">
         {Array.from({ length: 7 }).map((_, i) => (
           <div
             key={i}
@@ -19,12 +19,12 @@ export function HabitCardSkeleton() {
         {Array.from({ length: 35 }).map((_, i) => (
           <div
             key={i}
-            className="aspect-square rounded-full bg-gray-200 animate-pulse"
+            className="aspect-square animate-pulse rounded-full bg-gray-200"
           />
         ))}
       </div>
 
-      <div className="h-10 w-full bg-gray-200 rounded-lg animate-pulse" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200" />
     </div>
   );
 }

@@ -19,7 +19,11 @@ async function fetchHabitLogs(habitId: string, date: Date) {
 }
 
 export function useHabitLogs(habitId: string, date: Date) {
-  const { data: logs = [], isLoading: loading, error } = useQuery({
+  const {
+    data: logs = [],
+    isLoading: loading,
+    error,
+  } = useQuery({
     queryKey: ['habitLogs', habitId, date],
     queryFn: () => fetchHabitLogs(habitId, date),
   });

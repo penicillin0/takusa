@@ -6,13 +6,15 @@ import { supabase } from '../lib/supabase';
 
 export default function Login() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col">
-      <main className="flex-1 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-          <div className="flex flex-col items-center gap-2 mb-8">
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      <main className="flex flex-1 items-center justify-center p-4">
+        <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+          <div className="mb-8 flex flex-col items-center gap-2">
             <p className="text-4xl">🌿</p>
             <h1 className="text-3xl font-bold text-gray-900">Takusa</h1>
-            <p className="text-sm text-gray-600">草を生やす、習慣を育てる、未来を育てる</p>
+            <p className="text-sm text-gray-600">
+              草を生やす、習慣を育てる、未来を育てる
+            </p>
           </div>
           <Auth
             supabaseClient={supabase}

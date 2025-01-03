@@ -28,37 +28,37 @@ export function Header({ date, onDateChange, viewMode }: Props) {
 
   return (
     <header className="bg-white shadow">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
           <Link
             to="/dashboard"
-            className="flex items-center gap-2 text-gray-900 hover:text-gray-600 transition-colors"
+            className="flex items-center gap-2 text-gray-900 transition-colors hover:text-gray-600"
           >
             <span className="text-2xl">🌿</span>
-            <span className="text-lg sm:text-xl font-bold">Takusa</span>
+            <span className="text-lg font-bold sm:text-xl">Takusa</span>
           </Link>
 
-          <div className="flex-1 flex justify-center">
+          <div className="flex flex-1 justify-center">
             {viewMode === 'month' ? (
               <MonthSelector date={date} onChange={onDateChange} />
             ) : (
               <div className="flex items-center justify-center gap-4">
                 <button
                   onClick={handlePrevYear}
-                  className="p-2 hover:bg-gray-100 rounded-full"
+                  className="rounded-full p-2 hover:bg-gray-100"
                   aria-label="前年"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <ChevronLeft className="h-6 w-6" />
                 </button>
-                <h2 className="text-base sm:text-xl font-bold">
+                <h2 className="text-base font-bold sm:text-xl">
                   {format(date, 'yyyy年', { locale: ja })}
                 </h2>
                 <button
                   onClick={handleNextYear}
-                  className="p-2 hover:bg-gray-100 rounded-full"
+                  className="rounded-full p-2 hover:bg-gray-100"
                   aria-label="次年"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <ChevronRight className="h-6 w-6" />
                 </button>
               </div>
             )}
@@ -66,10 +66,10 @@ export function Header({ date, onDateChange, viewMode }: Props) {
 
           <button
             onClick={handleLogout}
-            className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+            className="rounded-lg p-2 text-gray-700 hover:bg-gray-100"
             aria-label="ログアウト"
           >
-            <LogOut className="w-5 h-5" />
+            <LogOut className="h-5 w-5" />
           </button>
         </div>
       </div>

@@ -9,7 +9,7 @@ export function useHabitMutation(habitId: string) {
   return useMutation({
     mutationFn: async () => {
       const today = format(new Date(), 'yyyy-MM-dd');
-      
+
       // 今日のログを確認
       const { data: existingLogs } = await supabase
         .from('habit_logs')
@@ -23,7 +23,7 @@ export function useHabitMutation(habitId: string) {
           .from('habit_logs')
           .delete()
           .eq('id', existingLogs[0].id);
-        
+
         if (error) throw error;
         return { type: 'delete' as const, log: existingLogs[0] };
       } else {
@@ -33,7 +33,7 @@ export function useHabitMutation(habitId: string) {
           .insert({ habit_id: habitId, date: today })
           .select()
           .single();
-        
+
         if (error) throw error;
         return { type: 'insert' as const, log: data };
       }

@@ -20,20 +20,20 @@ export function MonthSelector({ date, onChange }: Props) {
     <div className="flex items-center justify-center gap-4">
       <button
         onClick={handlePrevMonth}
-        className="p-2 hover:bg-gray-100 rounded-full"
+        className="rounded-full p-2 hover:bg-gray-100"
         aria-label="前月"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="h-6 w-6" />
       </button>
-      <h2 className="text-base sm:text-xl font-bold">
+      <h2 className="text-base font-bold sm:text-xl">
         {format(date, 'yyyy年M月', { locale: ja })}
       </h2>
       <button
         onClick={handleNextMonth}
-        className="p-2 hover:bg-gray-100 rounded-full"
+        className="rounded-full p-2 hover:bg-gray-100"
         aria-label="次月"
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="h-6 w-6" />
       </button>
     </div>
   );

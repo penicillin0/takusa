@@ -16,18 +16,13 @@ type Props = {
 export function YearView({ habits, date }: Props) {
   const months = eachMonthOfInterval({
     start: startOfYear(date),
-    end: endOfYear(date)
+    end: endOfYear(date),
   });
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {habits.map((habit) => (
-        <YearCard
-          key={habit.id}
-          habit={habit}
-          date={date}
-          months={months}
-        />
+        <YearCard key={habit.id} habit={habit} date={date} months={months} />
       ))}
     </div>
   );
@@ -50,7 +45,6 @@ function YearCard({ habit, date, months }: YearCardProps) {
   };
 
   const handleLogUpdate = async () => {
-    // イベントの伝播を止めるために、ボタンクリック時にstopPropagationを呼ぶ
     setIsUpdating(true);
     await mutation.mutateAsync();
     setIsUpdating(false);
@@ -61,46 +55,47 @@ function YearCard({ habit, date, months }: YearCardProps) {
   );
 
   if (loading) {
-    return (
-      <YearCardSkeleton />
-    );
+    return <YearCardSkeleton />;
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="rounded-lg bg-white p-4 shadow-md">
         <p className="text-red-600">エラーが発生しました</p>
       </div>
     );
   }
 
-  const monthlyStats = months.map(month => ({
+  const monthlyStats = months.map((month) => ({
     month,
-    count: initialLogs.filter(log => 
+    count: initialLogs.filter((log) =>
       log.date.startsWith(format(month, 'yyyy-MM'))
-    ).length
+    ).length,
   }));
 
   return (
     <div
       onClick={handleClick}
-      className="bg-white rounded-lg shadow-md p-4 cursor-pointer hover:shadow-lg transition-shadow"
+      className="cursor-pointer rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
     >
-      <div className="flex items-center gap-2 mb-4">
+      <div className="mb-4 flex items-center gap-2">
         <span className="text-xl">{habit.emoji}</span>
         <h3 className="text-lg font-semibold text-gray-900">{habit.name}</h3>
         <span className="ml-auto text-sm text-gray-600">
           年間達成: {initialLogs.length}日
         </span>
       </div>
-      
+
       <div className="grid grid-cols-6 gap-2">
         {monthlyStats.map(({ month, count }) => (
           <div
             key={month.toString()}
-            className="aspect-square rounded-lg flex flex-col items-center justify-center p-1"
+            className="flex aspect-square flex-col items-center justify-center rounded-lg p-1"
             style={{
-              backgroundColor: count > 0 ? `${habit.color}${Math.min(count * 20, 99).toString(16)}` : `${habit.color}10`
+              backgroundColor:
+                count > 0
+                  ? `${habit.color}${Math.min(count * 20, 99).toString(16)}`
+                  : `${habit.color}10`,
             }}
           >
             <span className="text-xs text-gray-600">
@@ -117,16 +112,16 @@ function YearCard({ habit, date, months }: YearCardProps) {
           handleLogUpdate();
         }}
         disabled={isUpdating}
-        className={`mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors disabled:opacity-50 ${
+        className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 transition-colors disabled:opacity-50 ${
           isCompletedToday
             ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             : 'text-white hover:opacity-90'
         }`}
         style={{
-          backgroundColor: isCompletedToday ? undefined : habit.color
+          backgroundColor: isCompletedToday ? undefined : habit.color,
         }}
       >
-        <Check className="w-5 h-5" />
+        <Check className="h-5 w-5" />
         {isCompletedToday ? '達成済み' : '今日の達成を記録'}
       </button>
     </div>

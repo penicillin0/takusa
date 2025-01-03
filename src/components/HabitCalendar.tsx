@@ -1,4 +1,13 @@
-import { startOfMonth, endOfMonth, eachDayOfInterval, format, getDay, startOfWeek, endOfWeek, isSameDay } from 'date-fns';
+import {
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  format,
+  getDay,
+  startOfWeek,
+  endOfWeek,
+  isSameDay,
+} from 'date-fns';
 import { ja } from 'date-fns/locale';
 import type { HabitLog } from '../types/habit';
 
@@ -28,7 +37,7 @@ export function HabitCalendar({ color, date, logs }: Props) {
       {['日', '月', '火', '水', '木', '金', '土'].map((day) => (
         <div
           key={day}
-          className="text-center text-sm font-medium text-gray-500 py-1"
+          className="py-1 text-center text-sm font-medium text-gray-500"
         >
           {day}
         </div>
@@ -47,15 +56,15 @@ export function HabitCalendar({ color, date, logs }: Props) {
         return (
           <div
             key={day.toISOString()}
-            className={`aspect-square rounded-full flex items-center justify-center text-sm ${
-              isCompleted 
+            className={`flex aspect-square items-center justify-center rounded-full text-sm ${
+              isCompleted
                 ? `text-white`
-                : isCurrentMonth 
-                  ? 'text-gray-900' 
+                : isCurrentMonth
+                  ? 'text-gray-900'
                   : 'text-gray-400'
             }`}
             style={{
-              backgroundColor: getBackgroundColor()
+              backgroundColor: getBackgroundColor(),
             }}
           >
             {format(day, 'd')}

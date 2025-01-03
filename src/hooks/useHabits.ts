@@ -13,7 +13,11 @@ async function fetchHabits() {
 }
 
 export function useHabits() {
-  const { data: habits = [], isLoading: loading, error } = useQuery({
+  const {
+    data: habits = [],
+    isLoading: loading,
+    error,
+  } = useQuery({
     queryKey: ['habits'],
     queryFn: fetchHabits,
   });

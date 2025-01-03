@@ -19,7 +19,11 @@ async function fetchYearLogs(habitId: string, date: Date) {
 }
 
 export function useYearLogs(habitId: string, date: Date) {
-  const { data: logs = [], isLoading: loading, error } = useQuery({
+  const {
+    data: logs = [],
+    isLoading: loading,
+    error,
+  } = useQuery({
     queryKey: ['yearLogs', habitId, date],
     queryFn: () => fetchYearLogs(habitId, date),
   });
