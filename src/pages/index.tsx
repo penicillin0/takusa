@@ -95,7 +95,7 @@ export default function Index() {
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta property="og:image" content="/ogp.png" />
-        <meta property="og:url" content="https://takusa-d3yupradb-penicillin0s-projects.vercel.app/" />
+        <meta property="og:url" content="https://takusa.vercel.app/" />
         <meta property="og:site_name" content="Takusa" />
         {/* <link rel="canonical" href="https://takusa.app" /> */}
       </Helmet>
