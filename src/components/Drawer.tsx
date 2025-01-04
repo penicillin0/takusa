@@ -1,4 +1,4 @@
-import { X, Mail, Shield, FileText, LogOut, ChevronRight } from 'lucide-react';
+import { X, Mail, Shield, FileText, LogOut, ChevronRight, Trash2, AlertTriangle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 type Props = {
@@ -16,6 +16,26 @@ export function Drawer({ isOpen, onClose }: Props) {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     onClose();
+  };
+
+  const handleDeleteAccount = async () => {
+    if (
+      !confirm(
+        '⚠️ 警告: アカウントを削除すると、全てのデータが完全に削除され、この操作は取り消せません。\n\n本当にアカウントを削除しますか？'
+      )
+    ) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.admin.deleteUser(
+        (await supabase.auth.getUser()).data.user?.id ?? ''
+      );
+      if (error) throw error;
+      await supabase.auth.signOut();
+    } catch {
+      alert('アカウントの削除に失敗しました');
+    }
   };
 
   const menuItems: MenuItem[] = [
@@ -53,12 +73,12 @@ export function Drawer({ isOpen, onClose }: Props) {
   return (
     <>
       {/* Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity"
-          onClick={onClose}
-        />
-      )}
+      <div
+        className={`fixed inset-0 z-40 bg-black transition-opacity ${
+          isOpen ? 'bg-opacity-50' : 'bg-opacity-0 pointer-events-none'
+        }`}
+        onClick={onClose}
+      />
 
       {/* Drawer */}
       <div
@@ -93,7 +113,22 @@ export function Drawer({ isOpen, onClose }: Props) {
             ))}
           </nav>
         </div>
-        <div className="absolute bottom-0 w-full border-t bg-gray-50/50 p-3">
+        <div className="absolute bottom-0 w-full space-y-3 border-t bg-gray-50/50 p-3">
+          <button
+            onClick={handleDeleteAccount}
+            className="group flex w-full items-center justify-between rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-red-600 transition-colors hover:bg-red-100"
+          >
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-100 text-red-600 transition-colors group-hover:bg-red-200">
+                <Trash2 className="h-5 w-5" />
+              </div>
+              <div className="flex items-center gap-1.5">
+                <AlertTriangle className="h-4 w-4" />
+                <span className="font-medium">アカウントを削除</span>
+              </div>
+            </div>
+            <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </button>
           <div className="text-center text-xs text-gray-500">
             Takusa v0.0.1
           </div>
