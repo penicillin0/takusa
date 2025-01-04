@@ -1,4 +1,5 @@
 import { X, Mail, Shield, FileText, LogOut, ChevronRight, Trash2, AlertTriangle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 type Props = {
@@ -13,9 +14,12 @@ type MenuItem = {
 };
 
 export function Drawer({ isOpen, onClose }: Props) {
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     onClose();
+    navigate('/login');
   };
 
   const handleDeleteAccount = async () => {
@@ -33,6 +37,7 @@ export function Drawer({ isOpen, onClose }: Props) {
       );
       if (error) throw error;
       await supabase.auth.signOut();
+      navigate('/login');
     } catch {
       alert('アカウントの削除に失敗しました');
     }
