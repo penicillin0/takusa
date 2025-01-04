@@ -25,9 +25,16 @@ export default function Login() {
                     brand: '#6366F1',
                     brandAccent: '#EC4899',
                   },
+                  fontSizes: {
+                    baseButtonSize: "14px"
+                  },
                   borderWidths: {
                     buttonBorderWidth: '0px',
                   },
+                  radii: {
+                    borderRadiusButton: "12px",
+                    inputBorderRadius: "12px",
+                  }
                 },
               },
             }}
