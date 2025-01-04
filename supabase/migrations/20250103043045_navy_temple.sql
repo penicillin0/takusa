@@ -24,7 +24,7 @@
 -- Create habits table
 CREATE TABLE IF NOT EXISTS habits (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid REFERENCES auth.users NOT NULL,
+  user_id uuid REFERENCES auth.users ON DELETE CASCADE NOT NULL,
   name text NOT NULL,
   color text NOT NULL,
   created_at timestamptz DEFAULT now(),
