@@ -1,4 +1,13 @@
-import { X, Mail, Shield, FileText, LogOut, ChevronRight, Trash2, AlertTriangle } from 'lucide-react';
+import {
+  X,
+  Mail,
+  Shield,
+  FileText,
+  LogOut,
+  ChevronRight,
+  Trash2,
+  AlertTriangle,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
@@ -32,13 +41,20 @@ export function Drawer({ isOpen, onClose }: Props) {
     }
 
     try {
-      const { error } = await supabase.auth.admin.deleteUser(
-        (await supabase.auth.getUser()).data.user?.id ?? ''
-      );
+      const id = (await supabase.auth.getUser()).data.user?.id;
+
+      if (!id) {
+        alert('アカウントの削除に失敗しました');
+        return;
+      }
+
+      const { error } = await supabase.functions.invoke('delete-own', {
+        body: { id },
+      });
       if (error) throw error;
-      await supabase.auth.signOut();
       navigate('/login');
-    } catch {
+    } catch (error) {
+      console.error(error);
       alert('アカウントの削除に失敗しました');
     }
   };
@@ -80,7 +96,7 @@ export function Drawer({ isOpen, onClose }: Props) {
       {/* Overlay */}
       <div
         className={`fixed inset-0 z-40 bg-black transition-opacity ${
-          isOpen ? 'bg-opacity-50' : 'bg-opacity-0 pointer-events-none'
+          isOpen ? 'bg-opacity-50' : 'pointer-events-none bg-opacity-0'
         }`}
         onClick={onClose}
       />
@@ -91,7 +107,7 @@ export function Drawer({ isOpen, onClose }: Props) {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex h-16 items-center float-end px-4">
+        <div className="float-end flex h-16 items-center px-4">
           <button
             onClick={onClose}
             className="rounded-full p-1.5 text-gray-500 hover:bg-gray-100"
@@ -134,9 +150,7 @@ export function Drawer({ isOpen, onClose }: Props) {
             </div>
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </button>
-          <div className="text-center text-xs text-gray-500">
-            Takusa v0.0.1
-          </div>
+          <div className="text-center text-xs text-gray-500">Takusa v0.0.1</div>
         </div>
       </div>
     </>
