@@ -7,9 +7,13 @@ import {
   ChevronRight,
   Trash2,
   AlertTriangle,
+  Loader2,
+  Check,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { useState } from 'react';
+import { Modal } from './Modal';
 
 type Props = {
   isOpen: boolean;
@@ -24,6 +28,9 @@ type MenuItem = {
 
 export function Drawer({ isOpen, onClose }: Props) {
   const navigate = useNavigate();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -32,31 +39,34 @@ export function Drawer({ isOpen, onClose }: Props) {
   };
 
   const handleDeleteAccount = async () => {
-    if (
-      !confirm(
-        '⚠️ 警告: アカウントを削除すると、全てのデータが完全に削除され、この操作は取り消せません。\n\n本当にアカウントを削除しますか？'
-      )
-    ) {
-      return;
-    }
-
+    setIsDeleting(true);
     try {
       const id = (await supabase.auth.getUser()).data.user?.id;
 
       if (!id) {
-        alert('アカウントの削除に失敗しました');
+        throw new Error('アカウントの削除に失敗しました');
         return;
       }
 
       const { error } = await supabase.functions.invoke('delete-own', {
         body: { id },
       });
+
       if (error) throw error;
-      navigate('/login');
+
+      setShowDeleteModal(false);
+      setShowSuccessModal(true);
     } catch (error) {
       console.error(error);
       alert('アカウントの削除に失敗しました');
+    } finally {
+      setIsDeleting(false);
     }
+  };
+
+  const handleSuccessModalClose = () => {
+    setShowSuccessModal(false);
+    navigate('/');
   };
 
   const menuItems: MenuItem[] = [
@@ -153,6 +163,78 @@ export function Drawer({ isOpen, onClose }: Props) {
           <div className="text-center text-xs text-gray-500">Takusa v0.0.1</div>
         </div>
       </div>
+
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => !isDeleting && setShowDeleteModal(false)}
+        showCloseButton={!isDeleting}
+      >
+        <div className="p-6">
+          <div className="mb-4 flex items-center justify-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+              <AlertTriangle className="h-6 w-6 text-red-600" />
+            </div>
+          </div>
+          <h3 className="mb-2 text-center text-lg font-semibold text-gray-900">
+            アカウントを削除しますか？
+          </h3>
+          <p className="mb-6 text-center text-sm text-gray-600">
+            この操作を実行すると、全てのデータが完全に削除され、元に戻すことはできません。
+          </p>
+          <div className="flex flex-col gap-3">
+            <button
+              onClick={handleDeleteAccount}
+              disabled={isDeleting}
+              className="flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  削除中...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="h-5 w-5" />
+                  アカウントを削除する
+                </>
+              )}
+            </button>
+            <button
+              onClick={() => setShowDeleteModal(false)}
+              disabled={isDeleting}
+              className="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 disabled:opacity-50"
+            >
+              キャンセル
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showSuccessModal}
+        onClose={handleSuccessModalClose}
+        showCloseButton={false}
+      >
+        <div className="p-6">
+          <div className="mb-4 flex items-center justify-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+              <Check className="h-6 w-6 text-green-600" />
+            </div>
+          </div>
+          <h3 className="mb-2 text-center text-lg font-semibold text-gray-900">
+            アカウントを削除しました
+          </h3>
+          <p className="mb-6 text-center text-sm text-gray-600">
+            またのご利用をお待ちしています！
+          </p>
+          <button
+            onClick={handleSuccessModalClose}
+            className="w-full rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white transition-colors hover:bg-indigo-700"
+          >
+            OK
+          </button>
+        </div>
+      </Modal>
     </>
   );
 }
