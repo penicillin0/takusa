@@ -20,7 +20,7 @@ export function MonthSelector({ date, onChange }: Props) {
     <div className="flex items-center justify-center gap-4">
       <button
         onClick={handlePrevMonth}
-        className="rounded-full p-2 hover:bg-gray-100"
+        className="rounded-full p-1.5 hover:bg-gray-100"
         aria-label="前月"
       >
         <ChevronLeft className="h-6 w-6" />
@@ -30,7 +30,7 @@ export function MonthSelector({ date, onChange }: Props) {
       </h2>
       <button
         onClick={handleNextMonth}
-        className="rounded-full p-2 hover:bg-gray-100"
+        className="rounded-full p-1.5 hover:bg-gray-100"
         aria-label="次月"
       >
         <ChevronRight className="h-6 w-6" />

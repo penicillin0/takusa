@@ -47,7 +47,7 @@ export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuC
                 >
                   <ChevronLeft className="h-6 w-6" />
                 </button>
-                <h2 className="text-base font-bold sm:text-3xl">
+                <h2 className="text-base font-bold sm:text-xl">
                   {format(date, 'yyyy年', { locale: ja })}
                 </h2>
                 <button
