@@ -49,9 +49,10 @@ export default function Dashboard() {
 
         <Link
           to="/habits/new"
-          className="fixed bottom-8 right-8 rounded-full bg-indigo-600 p-4 text-white shadow-lg transition-colors hover:bg-indigo-700"
+          className="group fixed bottom-8 right-8 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-lg transition-all hover:scale-110 hover:shadow-indigo-200/50 active:scale-95 sm:h-16 sm:w-16"
+          aria-label="新しい習慣を作成"
         >
-          <Plus className="h-6 w-6" />
+          <Plus className="h-6 w-6 transition-transform group-hover:rotate-90 sm:h-7 sm:w-7" />
         </Link>
       </main>
     </div>
