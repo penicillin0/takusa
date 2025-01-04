@@ -38,7 +38,8 @@ export default function Login() {
                 },
               },
             }}
-            providers={["google"]}
+            // MEMO: WebView での動作を考慮して Google ログインを無効化
+            providers={window.navigator.userAgent.includes('wv') ? [] : ["google"]}
             localization={{
               variables: {
                 sign_in: {
