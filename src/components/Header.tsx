@@ -42,17 +42,17 @@ export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuC
               <div className="flex items-center justify-center gap-4">
                 <button
                   onClick={handlePrevYear}
-                  className="rounded-full p-2 hover:bg-gray-100"
+                  className="rounded-full p-1.5 hover:bg-gray-100"
                   aria-label="前年"
                 >
                   <ChevronLeft className="h-6 w-6" />
                 </button>
-                <h2 className="text-base font-bold sm:text-xl">
+                <h2 className="text-base font-bold sm:text-3xl">
                   {format(date, 'yyyy年', { locale: ja })}
                 </h2>
                 <button
                   onClick={handleNextYear}
-                  className="rounded-full p-2 hover:bg-gray-100"
+                  className="rounded-full p-1.5 hover:bg-gray-100"
                   aria-label="次年"
                 >
                   <ChevronRight className="h-6 w-6" />
@@ -62,7 +62,7 @@ export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuC
           </div>
 
           <div className="flex items-center gap-4">
-            <ViewModeSelector mode={viewMode} onChange={onViewModeChange} />            
+            <ViewModeSelector mode={viewMode} onChange={onViewModeChange} />
           </div>
         </div>
       </div>
