@@ -146,8 +146,8 @@ export function Drawer({ isOpen, onClose }: Props) {
         </div>
         <div className="absolute bottom-0 w-full space-y-3 border-t bg-gray-50/50 p-3">
           <button
-            onClick={handleDeleteAccount}
             className="group flex w-full items-center justify-between rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-red-600 transition-colors hover:bg-red-100"
+            onClick={() => setShowDeleteModal(true)}
           >
             <div className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-100 text-red-600 transition-colors group-hover:bg-red-200">
