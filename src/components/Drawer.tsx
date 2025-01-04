@@ -18,8 +18,8 @@ export function Drawer({ isOpen, onClose }: Props) {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    onClose();
     navigate('/login');
+    onClose();
   };
 
   const handleDeleteAccount = async () => {
