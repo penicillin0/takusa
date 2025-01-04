@@ -26,16 +26,18 @@ export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuC
   return (
     <header className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-2 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-2 sm:gap-4">
-          <button
-            onClick={onMenuClick}
-            className="rounded-lg p-2 text-gray-700 hover:bg-gray-100"
-            aria-label="メニューを開く"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
+        <div className="grid grid-cols-[minmax(40px,_1fr)_auto_minmax(40px,_1fr)] items-center gap-2 sm:gap-4">
+          <div className="flex">
+            <button
+              onClick={onMenuClick}
+              className="rounded-lg p-2 text-gray-700 hover:bg-gray-100"
+              aria-label="メニューを開く"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
 
-          <div className="flex flex-1 justify-center">
+          <div className="flex justify-center">
             {viewMode === 'month' ? (
               <MonthSelector date={date} onChange={onDateChange} />
             ) : (
@@ -61,7 +63,7 @@ export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuC
             )}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex justify-end min-w-[40px]">
             <ViewModeSelector mode={viewMode} onChange={onViewModeChange} />
           </div>
         </div>
