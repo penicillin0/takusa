@@ -5,7 +5,6 @@ import { Header } from '../components/Header';
 import { ViewModeSelector } from '../components/ViewModeSelector';
 import { MonthView } from '../components/MonthView';
 import { YearView } from '../components/YearView';
-import { Footer } from '../components/Footer';
 import { useHabits } from '../hooks/useHabits';
 import type { ViewMode } from '../types/view';
 
@@ -53,7 +52,6 @@ export default function Dashboard() {
           <Plus className="h-6 w-6" />
         </Link>
       </main>
-      <Footer />
     </div>
   );
 }
