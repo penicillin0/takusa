@@ -17,7 +17,7 @@ export function MonthSelector({ date, onChange }: Props) {
   };
 
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-center gap-3">
       <button
         onClick={handlePrevMonth}
         className="rounded-full p-1.5 hover:bg-gray-100"
