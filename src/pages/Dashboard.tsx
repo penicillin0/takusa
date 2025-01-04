@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Drawer } from '../components/Drawer';
 import { Header } from '../components/Header';
-import { ViewModeSelector } from '../components/ViewModeSelector';
 import { MonthView } from '../components/MonthView';
 import { YearView } from '../components/YearView';
 import { useHabits } from '../hooks/useHabits';
@@ -11,6 +11,7 @@ import type { ViewMode } from '../types/view';
 export default function Dashboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>('month');
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { habits, loading: habitsLoading } = useHabits();
 
   const handleViewModeChange = (newMode: ViewMode) => {
@@ -31,14 +32,15 @@ export default function Dashboard() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
       <Header
         date={currentDate}
         onDateChange={setCurrentDate}
         viewMode={viewMode}
+        onViewModeChange={handleViewModeChange}
+        onMenuClick={() => setIsDrawerOpen(true)}
       />
       <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8 mx-auto">
-        <ViewModeSelector mode={viewMode} onChange={handleViewModeChange} />
-
         {viewMode === 'month' ? (
           <MonthView habits={habits} date={currentDate} />
         ) : (

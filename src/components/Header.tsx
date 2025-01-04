@@ -1,8 +1,7 @@
-import { LogOut } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { format, addYears } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { Link } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { ViewModeSelector } from './ViewModeSelector';
 import { MonthSelector } from './MonthSelector';
 import type { ViewMode } from '../types/view';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -11,13 +10,11 @@ type Props = {
   date: Date;
   onDateChange: (date: Date) => void;
   viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
+  onMenuClick: () => void;
 };
 
-export function Header({ date, onDateChange, viewMode }: Props) {
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-  };
-
+export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuClick }: Props) {
   const handlePrevYear = () => {
     onDateChange(addYears(date, -1));
   };
@@ -30,13 +27,13 @@ export function Header({ date, onDateChange, viewMode }: Props) {
     <header className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-2 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
-          <Link
-            to="/dashboard"
-            className="flex items-center gap-2 text-gray-900 transition-colors hover:text-gray-600"
+          <button
+            onClick={onMenuClick}
+            className="rounded-lg p-2 text-gray-700 hover:bg-gray-100"
+            aria-label="メニューを開く"
           >
-            <span className="text-2xl">🌿</span>
-            <span className="text-lg font-bold sm:text-xl">Takusa</span>
-          </Link>
+            <Menu className="h-5 w-5" />
+          </button>
 
           <div className="flex flex-1 justify-center">
             {viewMode === 'month' ? (
@@ -64,13 +61,9 @@ export function Header({ date, onDateChange, viewMode }: Props) {
             )}
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="rounded-lg p-2 text-gray-700 hover:bg-gray-100"
-            aria-label="ログアウト"
-          >
-            <LogOut className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-4">
+            <ViewModeSelector mode={viewMode} onChange={onViewModeChange} />            
+          </div>
         </div>
       </div>
     </header>

@@ -7,7 +7,7 @@ type Props = {
 
 export function ViewModeSelector({ mode, onChange }: Props) {
   return (
-    <div className="mb-6 flex justify-end">
+    <div className="flex justify-end">
       <select
         value={mode}
         onChange={(e) => onChange(e.target.value as ViewMode)}
