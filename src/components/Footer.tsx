@@ -1,29 +1,7 @@
 import { Heart } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { Link } from 'react-router-dom';
 
 export function Footer() {
-  const location = useLocation();
-  const isLoginPage = location.pathname === '/';
-
-  const handleDeleteAccount = async () => {
-    if (
-      !confirm('本当にアカウントを削除しますか？この操作は取り消せません。')
-    ) {
-      return;
-    }
-
-    try {
-      const { error } = await supabase.auth.admin.deleteUser(
-        (await supabase.auth.getUser()).data.user?.id ?? ''
-      );
-      if (error) throw error;
-      await supabase.auth.signOut();
-    } catch {
-      alert('アカウントの削除に失敗しました');
-    }
-  };
-
   return (
     <footer className="mt-auto border-t bg-white">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -38,14 +16,6 @@ export function Footer() {
             <Link to="/terms" className="transition-colors hover:text-gray-900">
               利用規約
             </Link>
-            {!isLoginPage && (
-              <button
-                onClick={handleDeleteAccount}
-                className="text-gray-400 transition-colors hover:text-red-500"
-              >
-                アカウントを削除
-              </button>
-            )}
           </div>
 
           <div className="order-first flex items-center gap-1 text-gray-500 sm:order-none">
