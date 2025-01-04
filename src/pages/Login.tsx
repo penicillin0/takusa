@@ -4,8 +4,8 @@ import { Footer } from '../components/Footer';
 import { supabase } from '../lib/supabase';
 
 export default function Login() {
-  alert('window.navigator.userAgent:' + window.navigator.userAgent);
-  
+  const from = new URL(window.location.href).searchParams.get('from');
+  const isFromWebView = from === 'webview';
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
@@ -42,7 +42,7 @@ export default function Login() {
               },
             }}
             // MEMO: WebView での動作を考慮して Google ログインを無効化
-            providers={window.navigator.userAgent.includes('wv') ? [] : ["google"]}
+            providers={isFromWebView ? [] : ["google"]}
             localization={{
               variables: {
                 sign_in: {
