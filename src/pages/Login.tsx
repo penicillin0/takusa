@@ -4,7 +4,7 @@ import { Footer } from '../components/Footer';
 import { supabase } from '../lib/supabase';
 
 export default function Login() {
-  console.log('window.navigator.userAgent:', window.navigator.userAgent);
+  alert('window.navigator.userAgent:' + window.navigator.userAgent);
   
 
   return (
