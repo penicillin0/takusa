@@ -4,6 +4,9 @@ import { Footer } from '../components/Footer';
 import { supabase } from '../lib/supabase';
 
 export default function Login() {
+  console.log('window.navigator.userAgent:', window.navigator.userAgent);
+  
+
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <main className="flex flex-1 items-center justify-center p-4">
