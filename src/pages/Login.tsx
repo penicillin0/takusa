@@ -38,7 +38,7 @@ export default function Login() {
                 },
               },
             }}
-            providers={[]}
+            providers={["google"]}
             localization={{
               variables: {
                 sign_in: {
