@@ -42,7 +42,8 @@ const Login = () => {
               },
             }}
             // MEMO: WebView での動作を考慮して Google ログインを無効化
-            providers={isFromWebView ? [] : ['google']}
+            // TODO: WebView での Google ログインを有効化する
+            providers={isFromWebView ? [] : []}
             localization={{
               variables: {
                 sign_in: {
