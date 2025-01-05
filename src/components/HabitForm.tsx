@@ -135,9 +135,9 @@ export function HabitForm({ habit, mode }: Props) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-      <div className="mx-auto max-w-2xl px-4 py-8">
+      <div className="mx-auto max-w-2xl px-4 py-6 sm:py-8">
         <div className="rounded-lg bg-white p-6 shadow-md">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-3 flex items-center justify-between sm:mb-6">
             <button
               onClick={() => navigate('/dashboard')}
               className="flex items-center text-gray-600 hover:text-gray-900"
@@ -157,7 +157,7 @@ export function HabitForm({ habit, mode }: Props) {
             )}
           </div>
 
-          <h1 className="mb-6 text-2xl font-bold text-gray-900">
+          <h1 className="mb-6 text-xl font-bold text-gray-900 sm:text-2xl">
             {mode === 'create' ? '新しい習慣を作成' : '習慣を編集'}
           </h1>
 
@@ -172,7 +172,7 @@ export function HabitForm({ habit, mode }: Props) {
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 絵文字
               </label>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-1 sm:gap-3">
                 {EMOJIS.map((e) => (
                   <button
                     key={e}

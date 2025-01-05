@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Drawer } from '../components/Drawer';
@@ -6,13 +6,42 @@ import { Header } from '../components/Header';
 import { MonthView } from '../components/MonthView';
 import { YearView } from '../components/YearView';
 import { useHabits } from '../hooks/useHabits';
+import { supabase } from '../lib/supabase';
 import type { ViewMode } from '../types/view';
+import { OnboardingGuide } from '../components/OnboardingGuide';
 
 export default function Dashboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>('month');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const { habits, loading: habitsLoading } = useHabits();
+
+  useEffect(() => {
+    const checkNewUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data: metadata } = await supabase
+        .from('user_metadata')
+        .select('onboarding_completed')
+        .eq('user_id', user.id)
+        .single();
+
+      if (!metadata) {
+        // 新規ユーザーの場合
+        setShowOnboarding(true);
+        await supabase.from('user_metadata').insert({
+          user_id: user.id,
+          onboarding_completed: true,
+        });
+      }
+    };
+
+    checkNewUser();
+  }, []);
 
   const handleViewModeChange = (newMode: ViewMode) => {
     if (newMode === 'month') {
@@ -33,6 +62,10 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
+      <OnboardingGuide
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+      />
       <Header
         date={currentDate}
         onDateChange={setCurrentDate}
@@ -40,7 +73,7 @@ export default function Dashboard() {
         onViewModeChange={handleViewModeChange}
         onMenuClick={() => setIsDrawerOpen(true)}
       />
-      <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8 mx-auto">
+      <main className="mx-auto flex-1 px-4 py-8 sm:px-6 lg:px-8">
         {viewMode === 'month' ? (
           <MonthView habits={habits} date={currentDate} />
         ) : (
