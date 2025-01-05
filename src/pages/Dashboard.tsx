@@ -9,10 +9,12 @@ import { useHabits } from '../hooks/useHabits';
 import { supabase } from '../lib/supabase';
 import type { ViewMode } from '../types/view';
 import { OnboardingGuide } from '../components/OnboardingGuide';
+import { useSettings } from '../contexts/SettingsContext';
 
 export default function Dashboard() {
+  const { settings } = useSettings();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState<ViewMode>('month');
+  const [viewMode, setViewMode] = useState<ViewMode>(settings.defaultViewMode);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const { habits, loading: habitsLoading } = useHabits();

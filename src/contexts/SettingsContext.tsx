@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { supabase } from '../lib/supabase';
 import { type Settings, DEFAULT_SETTINGS } from '../types/settings';
+import { ViewMode } from '../types/view';
 
 type SettingsContextType = {
   settings: Settings;
@@ -37,6 +38,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         setSettings({
           weekStartsOnMonday: data.week_starts_on_monday,
           showAchievementCount: data.show_achievement_count,
+          defaultViewMode: data.default_view_mode as ViewMode,
         });
       }
     };
@@ -66,6 +68,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         .update({
           week_starts_on_monday: updatedSettings.weekStartsOnMonday,
           show_achievement_count: updatedSettings.showAchievementCount,
+          default_view_mode: updatedSettings.defaultViewMode,
           updated_at: new Date().toISOString(),
         })
         .eq('user_id', user.id);
@@ -75,6 +78,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         user_id: user.id,
         week_starts_on_monday: updatedSettings.weekStartsOnMonday,
         show_achievement_count: updatedSettings.showAchievementCount,
+        default_view_mode: updatedSettings.defaultViewMode,
       });
     }
   };

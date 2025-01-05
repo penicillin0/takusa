@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSettings } from '../contexts/SettingsContext';
 import { useState } from 'react';
 import type { Settings } from '../types/settings';
+import { Calendar, CalendarRange } from 'lucide-react';
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -114,6 +115,47 @@ export default function Settings() {
                 />
                 <div className="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-200 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
               </label>
+            </div>
+          </div>
+
+          {/* デフォルトの表示モード設定 */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-900">
+              デフォルトの表示モード
+            </label>
+            <div className="flex gap-2">
+              <button
+                onClick={() =>
+                  setLocalSettings({
+                    ...localSettings,
+                    defaultViewMode: 'month',
+                  })
+                }
+                className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  localSettings.defaultViewMode === 'month'
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
+                月表示
+              </button>
+              <button
+                onClick={() =>
+                  setLocalSettings({
+                    ...localSettings,
+                    defaultViewMode: 'year',
+                  })
+                }
+                className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  localSettings.defaultViewMode === 'year'
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <CalendarRange className="h-4 w-4" />
+                年表示
+              </button>
             </div>
           </div>
         </div>
