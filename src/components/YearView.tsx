@@ -18,6 +18,7 @@ import { YearCardSkeleton } from './YearCardSkeleton';
 import { Confetti } from './Confetti';
 import { Check } from 'lucide-react';
 import type { Habit } from '../types/habit';
+import { useSettings } from '../contexts/SettingsContext';
 
 type Props = {
   habits: Habit[];
@@ -45,6 +46,7 @@ type YearCardProps = {
 
 const YearCard = ({ habit, date }: YearCardProps) => {
   const navigate = useNavigate();
+  const { settings } = useSettings();
   const { logs: initialLogs, loading, error } = useYearLogs(habit.id, date);
   const mutation = useHabitMutation(habit.id);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -125,9 +127,11 @@ const YearCard = ({ habit, date }: YearCardProps) => {
       <div className="mb-4 flex items-center gap-2">
         <span className="text-xl">{habit.emoji}</span>
         <h3 className="text-lg font-semibold text-gray-900">{habit.name}</h3>
-        <span className="ml-auto text-sm text-gray-600">
-          年間達成: {initialLogs.length}日
-        </span>
+        {settings.showAchievementCount && (
+          <span className="ml-auto text-sm text-gray-600">
+            年間達成: {initialLogs.length}日
+          </span>
+        )}
       </div>
 
       <div className="overflow-x-auto pb-2">
