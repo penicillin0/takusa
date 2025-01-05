@@ -66,6 +66,8 @@ export function Drawer({ isOpen, onClose }: Props) {
 
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false);
+    console.log('here');
+
     navigate('/');
   };
 

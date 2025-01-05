@@ -21,6 +21,9 @@ function App() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('onAuthStateChange', session);
+      console.log('onAuthStateChange', session?.user);
+
       setUser(session?.user ?? null);
     });
 
