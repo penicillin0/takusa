@@ -57,7 +57,6 @@ export function Drawer({ isOpen, onClose }: Props) {
       if (error) throw error;
 
       setShowDeleteModal(false);
-      setUser(null);
       setShowSuccessModal(true);
     } catch (error) {
       console.error(error);
@@ -68,6 +67,7 @@ export function Drawer({ isOpen, onClose }: Props) {
   };
 
   const handleSuccessModalClose = () => {
+    setUser(null);
     setShowSuccessModal(false);
     console.log('here');
 
