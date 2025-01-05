@@ -20,6 +20,7 @@ const Dashboard = () => {
   const { habits, loading: habitsLoading } = useHabits();
 
   // FIXME: useEffect を使わないようにしたい
+  // DB に持っている値と画面上の値が異なる場合があることに注意
   useEffect(() => {
     setViewModeInScreen(settings.defaultViewMode);
   }, [settings.defaultViewMode]);
