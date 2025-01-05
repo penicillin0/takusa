@@ -38,18 +38,15 @@ export const HabitCard = ({ habit, logs, date, onLogUpdate }: Props) => {
         setConfettiPosition({ x, y });
         setShowConfetti(true);
       }
-
-      // Webview からアプリへ通知
-      if (window.ReactNativeWebView) {
-        const result = confirm('アプリは気に入っていただけましたか？');
-        if (!result) return;
-
-        window.ReactNativeWebView.postMessage('appReviewRequest');
-      }
     } catch (error) {
       console.error('Error toggling habit:', error);
     } finally {
       setLoading(false);
+
+      // Webview からアプリへ通知
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage('appReviewRequest');
+      }
     }
   };
 
