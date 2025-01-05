@@ -59,12 +59,16 @@ const Login = () => {
                   button_label: '新規登録',
                   link_text: 'アカウントをお持ちでないですか？',
                   email_input_placeholder: 'example@example.com',
+                  confirmation_text:
+                    '確認メールを送信しました！メールを確認し、確認リンクをクリックしてください。',
                 },
                 forgotten_password: {
                   email_label: 'メールアドレス',
                   link_text: 'パスワードを忘れましたか？',
                   button_label: 'リセット',
                   email_input_placeholder: 'example@example.com',
+                  confirmation_text:
+                    'パスワードリセットメールを送信しました！メールを確認してください。',
                 },
               },
             }}
