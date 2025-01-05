@@ -4,6 +4,71 @@ import { useSettings } from '../contexts/SettingsContext';
 import { useState } from 'react';
 import type { Settings } from '../types/settings';
 import { Calendar, CalendarRange } from 'lucide-react';
+import { ViewMode } from '../types/view';
+
+type SettingsCardProps = {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+};
+
+const SettingsCard = ({ title, description, children }: SettingsCardProps) => {
+  return (
+    <div className="space-y-4 rounded-lg border border-gray-200 bg-gray-50 p-4">
+      <div className="flex items-center justify-between">
+        <div className="text-base font-medium text-gray-900">{title}</div>
+      </div>
+      <p className="text-sm text-gray-600">{description}</p>
+      {children}
+    </div>
+  );
+};
+
+type ToggleButtonProps = {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+};
+
+const ToggleButton = ({ checked, onChange }: ToggleButtonProps) => {
+  return (
+    <label className="relative inline-flex cursor-pointer items-center">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="peer sr-only"
+      />
+      <div className="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-200 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white" />
+    </label>
+  );
+};
+
+type ButtonGroupProps = {
+  options: { value: string; label: string; icon?: JSX.Element }[];
+  value: string;
+  onChange: (value: string) => void;
+};
+
+function ButtonGroup({ options, value, onChange }: ButtonGroupProps) {
+  return (
+    <div className="flex gap-2">
+      {options.map((option) => (
+        <button
+          key={option.value}
+          onClick={() => onChange(option.value)}
+          className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            value === option.value
+              ? 'bg-indigo-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          {option.icon}
+          {option.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -66,121 +131,68 @@ export default function Settings() {
           )}
 
           <div className="space-y-8">
-            {/* 週の開始日設定 */}
-            <div className="space-y-4 rounded-lg border border-gray-100 bg-gray-50/50 p-4">
-              <div className="flex items-center justify-between">
-                <div className="text-base font-medium text-gray-900">
-                  週の開始日
-                </div>
-              </div>
-              <p className="text-sm text-gray-600">
-                カレンダーの週の始まりを設定します。習慣の記録をより自然な形で管理できます。
-              </p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() =>
-                    setLocalSettings({
-                      ...localSettings,
-                      weekStartsOnMonday: false,
-                    })
-                  }
-                  className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    !localSettings.weekStartsOnMonday
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  日曜日
-                </button>
-                <button
-                  onClick={() =>
-                    setLocalSettings({
-                      ...localSettings,
-                      weekStartsOnMonday: true,
-                    })
-                  }
-                  className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    localSettings.weekStartsOnMonday
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  月曜日
-                </button>
-              </div>
-            </div>
+            <SettingsCard
+              title="週の開始日"
+              description="カレンダーの週の始まりを設定します。習慣の記録をより自然な形で管理できます。"
+            >
+              <ButtonGroup
+                options={[
+                  { value: 'sunday', label: '日曜日' },
+                  { value: 'monday', label: '月曜日' },
+                ]}
+                value={localSettings.weekStartsOnMonday ? 'monday' : 'sunday'}
+                onChange={(value) =>
+                  setLocalSettings({
+                    ...localSettings,
+                    weekStartsOnMonday: value === 'monday',
+                  })
+                }
+              />
+            </SettingsCard>
 
-            {/* 達成日数の表示設定 */}
-            <div className="space-y-4 rounded-lg border border-gray-100 bg-gray-50/50 p-4">
-              <div className="flex items-center justify-between">
-                <div className="text-base font-medium text-gray-900">
-                  達成日数の表示
-                </div>
-                <label className="relative inline-flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    checked={localSettings.showAchievementCount}
-                    onChange={(e) =>
-                      setLocalSettings({
-                        ...localSettings,
-                        showAchievementCount: e.target.checked,
-                      })
-                    }
-                    className="peer sr-only"
-                  />
-                  <div className="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-200 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white" />
-                </label>
+            <SettingsCard
+              title="達成日数の表示"
+              description="習慣カードに達成日数を表示します。各習慣の継続日数を一目で確認できます。"
+            >
+              <div className="flex items-center justify-end">
+                <ToggleButton
+                  checked={localSettings.showAchievementCount}
+                  onChange={(checked) =>
+                    setLocalSettings({
+                      ...localSettings,
+                      showAchievementCount: checked,
+                    })
+                  }
+                />
               </div>
-              <p className="text-sm text-gray-600">
-                習慣カードに達成日数を表示します。各習慣の継続日数を一目で確認できます。
-              </p>
-            </div>
+            </SettingsCard>
 
-            {/* デフォルトの表示モード設定 */}
-            <div className="space-y-4 rounded-lg border border-gray-100 bg-gray-50/50 p-4">
-              <div className="flex items-center justify-between">
-                <div className="text-base font-medium text-gray-900">
-                  デフォルトの表示モード
-                </div>
-              </div>
-              <p className="text-sm text-gray-600">
-                ダッシュボードを開いた時の表示モードを設定します。月単位または年単位で習慣の進捗を確認できます。
-              </p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() =>
-                    setLocalSettings({
-                      ...localSettings,
-                      defaultViewMode: 'month',
-                    })
-                  }
-                  className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    localSettings.defaultViewMode === 'month'
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  <Calendar className="h-4 w-4" />
-                  月表示
-                </button>
-                <button
-                  onClick={() =>
-                    setLocalSettings({
-                      ...localSettings,
-                      defaultViewMode: 'year',
-                    })
-                  }
-                  className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    localSettings.defaultViewMode === 'year'
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  <CalendarRange className="h-4 w-4" />
-                  年表示
-                </button>
-              </div>
-            </div>
+            <SettingsCard
+              title="デフォルトの表示モード"
+              description="ダッシュボードを開いた時の表示モードを設定します。月単位または年単位で習慣の進捗を確認できます。"
+            >
+              <ButtonGroup
+                options={[
+                  {
+                    value: 'month',
+                    label: '月表示',
+                    icon: <Calendar className="h-4 w-4" />,
+                  },
+                  {
+                    value: 'year',
+                    label: '年表示',
+                    icon: <CalendarRange className="h-4 w-4" />,
+                  },
+                ]}
+                value={localSettings.defaultViewMode}
+                onChange={(value) =>
+                  setLocalSettings({
+                    ...localSettings,
+                    defaultViewMode: value as ViewMode,
+                  })
+                }
+              />
+            </SettingsCard>
           </div>
         </div>
       </div>
