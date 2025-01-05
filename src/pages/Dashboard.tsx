@@ -73,7 +73,7 @@ export default function Dashboard() {
         onViewModeChange={handleViewModeChange}
         onMenuClick={() => setIsDrawerOpen(true)}
       />
-      <main className="mx-auto flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto flex-1 px-4 py-8 pb-16 sm:px-6 lg:px-8">
         {viewMode === 'month' ? (
           <MonthView habits={habits} date={currentDate} />
         ) : (
