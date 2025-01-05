@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import {
   startOfYear,
   endOfYear,
-  eachMonthOfInterval,
+  eachDayOfInterval,
   format,
   isSameYear,
   isAfter,
+  getDay,
+  startOfWeek,
+  endOfWeek,
 } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import { useYearLogs } from '../hooks/useYearLogs';
@@ -22,15 +25,10 @@ type Props = {
 };
 
 export function YearView({ habits, date }: Props) {
-  const months = eachMonthOfInterval({
-    start: startOfYear(date),
-    end: endOfYear(date),
-  });
-
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6">
       {habits.map((habit) => (
-        <YearCard key={habit.id} habit={habit} date={date} months={months} />
+        <YearCard key={habit.id} habit={habit} date={date} />
       ))}
     </div>
   );
@@ -39,10 +37,9 @@ export function YearView({ habits, date }: Props) {
 type YearCardProps = {
   habit: Habit;
   date: Date;
-  months: Date[];
 };
 
-function YearCard({ habit, date, months }: YearCardProps) {
+function YearCard({ habit, date }: YearCardProps) {
   const navigate = useNavigate();
   const { logs: initialLogs, loading, error } = useYearLogs(habit.id, date);
   const mutation = useHabitMutation(habit.id);
@@ -93,12 +90,25 @@ function YearCard({ habit, date, months }: YearCardProps) {
     );
   }
 
-  const monthlyStats = months.map((month) => ({
-    month,
-    count: initialLogs.filter((log) =>
-      log.date.startsWith(format(month, 'yyyy-MM'))
-    ).length,
-  }));
+  // 年の開始日と終了日を取得
+  const yearStart = startOfYear(date);
+  const yearEnd = endOfYear(date);
+
+  // 表示開始日を年の開始日の週の始めに設定
+  const displayStart = startOfWeek(yearStart, { weekStartsOn: 0 });
+  // 表示終了日を年の終了日の週の終わりに設定
+  const displayEnd = endOfWeek(yearEnd, { weekStartsOn: 0 });
+
+  // 全ての日付を取得
+  const days = eachDayOfInterval({ start: displayStart, end: displayEnd });
+
+  // 月の表示用に各列の最初の日付を取得
+  const monthLabels = days
+    .filter((day, index) => index % 7 === 0)
+    .map((day) => ({
+      month: format(day, 'M', { locale: ja }),
+      shouldShow: day.getDate() <= 7,
+    }));
 
   return (
     <div
@@ -116,24 +126,47 @@ function YearCard({ habit, date, months }: YearCardProps) {
         </span>
       </div>
 
-      <div className="grid grid-cols-6 gap-2">
-        {monthlyStats.map(({ month, count }) => (
-          <div
-            key={month.toString()}
-            className="flex aspect-square flex-col items-center justify-center rounded-lg p-1"
-            style={{
-              backgroundColor:
-                count > 0
-                  ? `${habit.color}${Math.min(count * 20, 99).toString(16)}`
-                  : `${habit.color}10`,
-            }}
-          >
-            <span className="text-xs text-gray-600">
-              {format(month, 'M', { locale: ja })}月
-            </span>
-            <span className="font-medium text-gray-900">{count}</span>
+      <div className="overflow-x-auto pb-2">
+        <div className="min-w-[780px]">
+          {/* 月表示 */}
+          <div className="mb-1 grid grid-cols-[repeat(53,_minmax(16px,_1fr))]">
+            {monthLabels.map((label, i) => (
+              <div
+                key={i}
+                className="w-3 whitespace-nowrap text-xs text-gray-500"
+              >
+                {label.shouldShow && `${label.month}月`}
+              </div>
+            ))}
           </div>
-        ))}
+
+          <div className="grid grid-cols-[repeat(53,_minmax(12px,_1fr))] gap-1">
+            {/* コントリビューショングラフ */}
+            {days.map((day) => {
+              const dayStr = format(day, 'yyyy-MM-dd');
+              const isCompleted = initialLogs.some(
+                (log) => log.date === dayStr
+              );
+              const isInYear = day >= yearStart && day <= yearEnd;
+
+              return (
+                <div
+                  key={dayStr}
+                  style={{
+                    backgroundColor: isInYear
+                      ? isCompleted
+                        ? habit.color
+                        : `${habit.color}20`
+                      : 'transparent',
+                    gridRowStart: getDay(day) + 1,
+                  }}
+                  className="aspect-square w-3 rounded-sm"
+                  title={format(day, 'yyyy年M月d日')}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <button
