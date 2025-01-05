@@ -48,6 +48,8 @@ export const HabitCard = ({ habit, logs, date, onLogUpdate }: Props) => {
     } finally {
       setLoading(false);
 
+      console.log('isCompletedToday', isCompletedToday);
+
       // Webview からアプリへ通知
       if (window.ReactNativeWebView && !isCompletedToday) {
         window.ReactNativeWebView.postMessage('appReviewRequest');
