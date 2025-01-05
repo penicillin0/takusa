@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { HabitCalendar } from './HabitCalendar';
 import { Confetti } from './Confetti';
 import type { Habit, HabitLog } from '../types/habit';
+import { useSettings } from '../contexts/SettingsContext';
 
 type Props = {
   habit: Habit;
@@ -18,6 +19,7 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [confettiPosition, setConfettiPosition] = useState({ x: 0, y: 0 });
   const navigate = useNavigate();
+  const { settings } = useSettings();
 
   const handleClick = () => {
     navigate(`/habits/${habit.id}/edit`);
@@ -60,7 +62,9 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
           <span className="text-xl">{habit.emoji}</span>
           <h3 className="text-lg font-semibold text-gray-900">{habit.name}</h3>
         </div>
-        <span className="text-sm text-gray-600">{logs.length}日達成</span>
+        {settings.showAchievementCount && (
+          <span className="text-sm text-gray-600">{logs.length}日達成</span>
+        )}
       </div>
 
       <HabitCalendar color={habit.color} date={date} logs={logs} />

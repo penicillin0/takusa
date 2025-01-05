@@ -1,6 +1,7 @@
 import {
   X,
   Mail,
+  Settings,
   Shield,
   FileText,
   LogOut,
@@ -74,6 +75,14 @@ export function Drawer({ isOpen, onClose }: Props) {
   };
 
   const menuItems: MenuItem[] = [
+    {
+      icon: <Settings className="h-5 w-5" />,
+      label: '設定',
+      onClick: () => {
+        navigate('/settings');
+        onClose();
+      },
+    },
     {
       icon: <Mail className="h-5 w-5" />,
       label: 'お問い合わせ',

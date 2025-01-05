@@ -5,8 +5,10 @@ import Index from './pages/index';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import NewHabit from './pages/NewHabit';
+import Settings from './pages/Settings';
 import EditHabit from './pages/EditHabit';
 import { UserProvider } from './contexts/UserContext';
+import { SettingsProvider } from './contexts/SettingsContext';
 import type { User } from '@supabase/supabase-js';
 
 function App() {
@@ -38,30 +40,36 @@ function App() {
 
   return (
     <UserProvider value={{ user, setUser }}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/login"
-            element={user ? <Navigate to="/dashboard" /> : <Login />}
-          />
-          <Route
-            path="/dashboard"
-            element={user ? <Dashboard /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/habits/new"
-            element={user ? <NewHabit /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/habits/:id/edit"
-            element={user ? <EditHabit /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/"
-            element={user ? <Navigate to="/dashboard" /> : <Index />}
-          />
-        </Routes>
-      </BrowserRouter>
+      <SettingsProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/login"
+              element={user ? <Navigate to="/dashboard" /> : <Login />}
+            />
+            <Route
+              path="/dashboard"
+              element={user ? <Dashboard /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/habits/new"
+              element={user ? <NewHabit /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/habits/:id/edit"
+              element={user ? <EditHabit /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/settings"
+              element={user ? <Settings /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/"
+              element={user ? <Navigate to="/dashboard" /> : <Index />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </SettingsProvider>
     </UserProvider>
   );
 }

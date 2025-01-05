@@ -8,6 +8,7 @@ import {
   isSameDay,
 } from 'date-fns';
 import { ja } from 'date-fns/locale';
+import { useSettings } from '../contexts/SettingsContext';
 import type { HabitLog } from '../types/habit';
 
 type Props = {
@@ -17,13 +18,24 @@ type Props = {
 };
 
 export function HabitCalendar({ color, date, logs }: Props) {
+  const { settings } = useSettings();
+  const weekDays = settings.weekStartsOnMonday
+    ? ['月', '火', '水', '木', '金', '土', '日']
+    : ['日', '月', '火', '水', '木', '金', '土'];
+
   // 月の最初と最後の日を取得
   const monthStart = startOfMonth(date);
   const monthEnd = endOfMonth(date);
 
   // カレンダーの表示範囲を週の始めと終わりに合わせる
-  const calendarStart = startOfWeek(monthStart, { locale: ja });
-  const calendarEnd = endOfWeek(monthEnd, { locale: ja });
+  const calendarStart = startOfWeek(monthStart, {
+    locale: ja,
+    weekStartsOn: settings.weekStartsOnMonday ? 1 : 0,
+  });
+  const calendarEnd = endOfWeek(monthEnd, {
+    locale: ja,
+    weekStartsOn: settings.weekStartsOnMonday ? 1 : 0,
+  });
 
   // カレンダーに表示する日付の配列を生成
   const days = eachDayOfInterval({
@@ -33,7 +45,7 @@ export function HabitCalendar({ color, date, logs }: Props) {
 
   return (
     <div className="grid grid-cols-7 gap-1">
-      {['日', '月', '火', '水', '木', '金', '土'].map((day) => (
+      {weekDays.map((day) => (
         <div
           key={day}
           className="py-1 text-center text-sm font-medium text-gray-500"
@@ -55,7 +67,7 @@ export function HabitCalendar({ color, date, logs }: Props) {
         return (
           <div
             key={day.toISOString()}
-            className={`flex p-1.5 aspect-square items-center justify-center rounded-full text-sm ${
+            className={`flex aspect-square items-center justify-center rounded-full p-1.5 text-sm ${
               isCompleted
                 ? `text-white`
                 : isCurrentMonth
