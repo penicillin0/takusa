@@ -28,7 +28,11 @@ export function YearView({ habits, date }: Props) {
   return (
     <div className="grid grid-cols-1 gap-6">
       {habits.map((habit) => (
-        <YearCard key={habit.id} habit={habit} date={date} />
+        <YearCard
+          key={`${habit.id}-${date.getFullYear()}`}
+          habit={habit}
+          date={date}
+        />
       ))}
     </div>
   );
@@ -104,7 +108,7 @@ function YearCard({ habit, date }: YearCardProps) {
 
   // 月の表示用に各列の最初の日付を取得
   const monthLabels = days
-    .filter((day, index) => index % 7 === 0)
+    .filter((_, index) => index % 7 === 0)
     .map((day) => ({
       month: format(day, 'M', { locale: ja }),
       shouldShow: day.getDate() <= 7,
