@@ -1,8 +1,9 @@
 import { Check } from 'lucide-react';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HabitCalendar } from './HabitCalendar';
+import { Confetti } from './Confetti';
 import type { Habit, HabitLog } from '../types/habit';
 
 type Props = {
@@ -14,17 +15,27 @@ type Props = {
 
 export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
   const [loading, setLoading] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiPosition, setConfettiPosition] = useState({ x: 0, y: 0 });
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/habits/${habit.id}/edit`);
   };
 
-  const toggleToday = async (e: React.MouseEvent) => {
+  const toggleToday = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
     try {
       setLoading(true);
-      await onLogUpdate();
+      onLogUpdate();
+      if (!isCompletedToday) {
+        setConfettiPosition({ x, y });
+        setShowConfetti(true);
+      }
     } catch (error) {
       console.error('Error toggling habit:', error);
     } finally {
@@ -41,6 +52,9 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
       className="cursor-pointer rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
       onClick={handleClick}
     >
+      {showConfetti && (
+        <Confetti x={confettiPosition.x} y={confettiPosition.y} />
+      )}
       <div className="mb-4 flex items-start justify-between">
         <div className="flex items-center gap-2">
           <span className="text-xl">{habit.emoji}</span>

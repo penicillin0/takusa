@@ -5,6 +5,7 @@ import { ja } from 'date-fns/locale';
 import { useYearLogs } from '../hooks/useYearLogs';
 import { useHabitMutation } from '../hooks/useHabitMutation';
 import { YearCardSkeleton } from './YearCardSkeleton';
+import { Confetti } from './Confetti';
 import { Check } from 'lucide-react';
 import type { Habit } from '../types/habit';
 
@@ -39,14 +40,29 @@ function YearCard({ habit, date, months }: YearCardProps) {
   const { logs: initialLogs, loading, error } = useYearLogs(habit.id, date);
   const mutation = useHabitMutation(habit.id);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiPosition, setConfettiPosition] = useState({ x: 0, y: 0 });
 
   const handleClick = () => {
     navigate(`/habits/${habit.id}/edit`);
   };
 
-  const handleLogUpdate = async () => {
+  const handleLogUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
     setIsUpdating(true);
-    await mutation.mutateAsync();
+    try {
+      const result = await mutation.mutateAsync();
+      if (result && !isCompletedToday) {
+        setConfettiPosition({ x, y });
+        setShowConfetti(true);
+      }
+    } catch (error) {
+      console.error('Error updating log:', error);
+    }
     setIsUpdating(false);
   };
 
@@ -78,6 +94,9 @@ function YearCard({ habit, date, months }: YearCardProps) {
       onClick={handleClick}
       className="cursor-pointer rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
     >
+      {showConfetti && (
+        <Confetti x={confettiPosition.x} y={confettiPosition.y} />
+      )}
       <div className="mb-4 flex items-center gap-2">
         <span className="text-xl">{habit.emoji}</span>
         <h3 className="text-lg font-semibold text-gray-900">{habit.name}</h3>
@@ -108,8 +127,7 @@ function YearCard({ habit, date, months }: YearCardProps) {
 
       <button
         onClick={(e) => {
-          e.stopPropagation();
-          handleLogUpdate();
+          handleLogUpdate(e);
         }}
         disabled={isUpdating}
         className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 transition-colors disabled:opacity-50 ${
