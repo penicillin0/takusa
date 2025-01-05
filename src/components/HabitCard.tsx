@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react';
 import { format } from 'date-fns';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HabitCalendar } from './HabitCalendar';
 import { Confetti } from './Confetti';
