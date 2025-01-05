@@ -18,7 +18,7 @@ export function Footer() {
           </div>
 
           <div className="text-gray-400">
-            © {new Date().getFullYear()} Takusa. All rights reserved.
+            © 2025 Takusa. All rights reserved.
           </div>
         </div>
       </div>
