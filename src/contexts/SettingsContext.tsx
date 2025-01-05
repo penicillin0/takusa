@@ -18,7 +18,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(
   undefined
 );
 
-export function SettingsProvider({ children }: { children: ReactNode }) {
+export const SettingsProvider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
@@ -88,13 +88,13 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       {children}
     </SettingsContext.Provider>
   );
-}
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function useSettings() {
+export const useSettings = () => {
   const context = useContext(SettingsContext);
   if (!context) {
     throw new Error('useSettings must be used within a SettingsProvider');
   }
   return context;
-}
+};

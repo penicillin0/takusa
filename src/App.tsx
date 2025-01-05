@@ -11,7 +11,7 @@ import { UserProvider } from './contexts/UserContext';
 import { SettingsProvider } from './contexts/SettingsContext';
 import type { User } from '@supabase/supabase-js';
 
-function App() {
+const App = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -72,6 +72,6 @@ function App() {
       </SettingsProvider>
     </UserProvider>
   );
-}
+};
 
 export default App;

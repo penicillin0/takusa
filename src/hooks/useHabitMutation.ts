@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { supabase } from '../lib/supabase';
 
-export function useHabitMutation(habitId: string) {
+export const useHabitMutation = (habitId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -43,4 +43,4 @@ export function useHabitMutation(habitId: string) {
       queryClient.invalidateQueries({ queryKey: ['yearLogs'] });
     },
   });
-}
+};

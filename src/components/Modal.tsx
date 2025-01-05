@@ -8,12 +8,12 @@ type Props = {
   showCloseButton?: boolean;
 };
 
-export function Modal({
+export const Modal = ({
   isOpen,
   onClose,
   children,
   showCloseButton = true,
-}: Props) {
+}: Props) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -48,4 +48,4 @@ export function Modal({
       </div>
     </>
   );
-}
+};

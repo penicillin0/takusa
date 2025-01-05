@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { supabase } from '../lib/supabase';
 
-async function fetchHabitLogs(habitId: string, date: Date) {
+const fetchHabitLogs = async (habitId: string, date: Date) => {
   const start = startOfMonth(date);
   const end = endOfMonth(date);
 
@@ -15,9 +15,9 @@ async function fetchHabitLogs(habitId: string, date: Date) {
 
   if (error) throw error;
   return data;
-}
+};
 
-export function useHabitLogs(habitId: string, date: Date) {
+export const useHabitLogs = (habitId: string, date: Date) => {
   const {
     data: logs = [],
     isLoading: loading,
@@ -28,4 +28,4 @@ export function useHabitLogs(habitId: string, date: Date) {
   });
 
   return { logs, loading, error };
-}
+};

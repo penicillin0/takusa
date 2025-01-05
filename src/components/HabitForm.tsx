@@ -58,7 +58,7 @@ type Props = {
   mode: 'create' | 'edit';
 };
 
-export function HabitForm({ habit, mode }: Props) {
+export const HabitForm = ({ habit, mode }: Props) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [name, setName] = useState(habit?.name ?? '');
@@ -237,4 +237,4 @@ export function HabitForm({ habit, mode }: Props) {
       </div>
     </div>
   );
-}
+};

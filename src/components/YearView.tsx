@@ -24,7 +24,7 @@ type Props = {
   date: Date;
 };
 
-export function YearView({ habits, date }: Props) {
+export const YearView = ({ habits, date }: Props) => {
   return (
     <div className="grid grid-cols-1 gap-6">
       {habits.map((habit) => (
@@ -36,14 +36,14 @@ export function YearView({ habits, date }: Props) {
       ))}
     </div>
   );
-}
+};
 
 type YearCardProps = {
   habit: Habit;
   date: Date;
 };
 
-function YearCard({ habit, date }: YearCardProps) {
+const YearCard = ({ habit, date }: YearCardProps) => {
   const navigate = useNavigate();
   const { logs: initialLogs, loading, error } = useYearLogs(habit.id, date);
   const mutation = useHabitMutation(habit.id);
@@ -205,4 +205,4 @@ function YearCard({ habit, date }: YearCardProps) {
       </button>
     </div>
   );
-}
+};

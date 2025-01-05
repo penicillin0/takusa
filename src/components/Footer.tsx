@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export function Footer() {
+export const Footer = () => {
   return (
     <footer className="mt-auto border-t bg-white">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -24,4 +24,4 @@ export function Footer() {
       </div>
     </footer>
   );
-}
+};

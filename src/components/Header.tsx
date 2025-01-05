@@ -12,7 +12,13 @@ type Props = {
   onMenuClick: () => void;
 };
 
-export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuClick }: Props) {
+export const Header = ({
+  date,
+  onDateChange,
+  viewMode,
+  onViewModeChange,
+  onMenuClick,
+}: Props) => {
   return (
     <header className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-2 py-4 sm:px-6 lg:px-8">
@@ -35,11 +41,11 @@ export function Header({ date, onDateChange, viewMode, onViewModeChange, onMenuC
             )}
           </div>
 
-          <div className="flex justify-end min-w-[40px]">
+          <div className="flex min-w-[40px] justify-end">
             <ViewModeSelector mode={viewMode} onChange={onViewModeChange} />
           </div>
         </div>
       </div>
     </header>
   );
-}
+};

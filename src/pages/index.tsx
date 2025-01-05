@@ -1,15 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import {
-  Sprout,
-  Calendar,
-  BarChart2,
-  Shield,
-  ArrowRight,
-  CheckCircle,
-  Users,
-  Star,
-} from 'lucide-react';
+import { Sprout, Calendar, BarChart2, Shield, ArrowRight } from 'lucide-react';
 import { Footer } from '../components/Footer';
 
 const features = [
@@ -54,14 +45,14 @@ const testimonials = [
   },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stats = [
-  { icon: <Users />, value: '10,000+', label: 'ユーザー' },
-  { icon: <CheckCircle />, value: '100万+', label: '達成記録' },
-  { icon: <Star />, value: '4.8', label: '平均評価' },
-];
+ 
+// const stats = [
+//   { icon: <Users />, value: '10,000+', label: 'ユーザー' },
+//   { icon: <CheckCircle />, value: '100万+', label: '達成記録' },
+//   { icon: <Star />, value: '4.8', label: '平均評価' },
+// ];
 
-export default function Index() {
+const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50/80 via-purple-50/80 to-pink-50/80">
       <Helmet>
@@ -70,10 +61,30 @@ export default function Index() {
         {/* favicon */}
         <link rel="icon" href="/favicon.ico" />
 
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="48x48"
+          href="/favicon-48x48.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="96x96"
+          href="/favicon-96x96.png"
+        />
 
         <meta
           name="description"
@@ -325,4 +336,6 @@ export default function Index() {
       <Footer />
     </div>
   );
-}
+};
+
+export default Index;

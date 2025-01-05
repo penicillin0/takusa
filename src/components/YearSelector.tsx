@@ -7,7 +7,7 @@ type Props = {
   onChange: (date: Date) => void;
 };
 
-export function YearSelector({ date, onChange }: Props) {
+export const YearSelector = ({ date, onChange }: Props) => {
   const handlePrevYear = () => {
     onChange(addYears(date, -1));
   };
@@ -37,4 +37,4 @@ export function YearSelector({ date, onChange }: Props) {
       </button>
     </div>
   );
-}
+};

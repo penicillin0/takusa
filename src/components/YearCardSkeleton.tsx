@@ -1,4 +1,4 @@
-export function YearCardSkeleton() {
+export const YearCardSkeleton = () => {
   return (
     <div className="rounded-lg bg-white p-4 shadow-md">
       <div className="mb-4 flex items-center gap-2">
@@ -36,4 +36,4 @@ export function YearCardSkeleton() {
       <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200" />
     </div>
   );
-}
+};

@@ -30,7 +30,7 @@ const STEPS = [
   },
 ];
 
-export function OnboardingGuide({ isOpen, onClose }: Props) {
+export const OnboardingGuide = ({ isOpen, onClose }: Props) => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
@@ -114,4 +114,4 @@ export function OnboardingGuide({ isOpen, onClose }: Props) {
       )}
     </>
   );
-}
+};

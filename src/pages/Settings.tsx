@@ -49,7 +49,7 @@ type ButtonGroupProps = {
   onChange: (value: string) => void;
 };
 
-function ButtonGroup({ options, value, onChange }: ButtonGroupProps) {
+const ButtonGroup = ({ options, value, onChange }: ButtonGroupProps) => {
   return (
     <div className="flex gap-2">
       {options.map((option) => (
@@ -68,9 +68,9 @@ function ButtonGroup({ options, value, onChange }: ButtonGroupProps) {
       ))}
     </div>
   );
-}
+};
 
-export default function Settings() {
+const Settings = () => {
   const navigate = useNavigate();
   const { settings, updateSettings } = useSettings();
   const [localSettings, setLocalSettings] = useState<Settings>(settings);
@@ -198,4 +198,6 @@ export default function Settings() {
       </div>
     </div>
   );
-}
+};
+
+export default Settings;

@@ -17,7 +17,7 @@ type Props = {
   logs: HabitLog[];
 };
 
-export function HabitCalendar({ color, date, logs }: Props) {
+export const HabitCalendar = ({ color, date, logs }: Props) => {
   const { settings } = useSettings();
   const weekDays = settings.weekStartsOnMonday
     ? ['月', '火', '水', '木', '金', '土', '日']
@@ -84,4 +84,4 @@ export function HabitCalendar({ color, date, logs }: Props) {
       })}
     </div>
   );
-}
+};

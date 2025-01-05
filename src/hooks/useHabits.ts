@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase';
 
-async function fetchHabits() {
+const fetchHabits = async () => {
   const { data, error } = await supabase
     .from('habits')
     .select('*')
@@ -9,9 +9,9 @@ async function fetchHabits() {
 
   if (error) throw error;
   return data;
-}
+};
 
-export function useHabits() {
+export const useHabits = () => {
   const {
     data: habits = [],
     isLoading: loading,
@@ -22,4 +22,4 @@ export function useHabits() {
   });
 
   return { habits, loading, error };
-}
+};

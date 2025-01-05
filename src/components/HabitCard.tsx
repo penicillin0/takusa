@@ -14,7 +14,7 @@ type Props = {
   onLogUpdate: () => void;
 };
 
-export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
+export const HabitCard = ({ habit, logs, date, onLogUpdate }: Props) => {
   const [loading, setLoading] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [confettiPosition, setConfettiPosition] = useState({ x: 0, y: 0 });
@@ -101,4 +101,4 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
       </button>
     </div>
   );
-}
+};

@@ -19,7 +19,7 @@ const viewModes = [
   },
 ] as const;
 
-export function ViewModeSelector({ mode, onChange }: Props) {
+export const ViewModeSelector = ({ mode, onChange }: Props) => {
   return (
     <div className="flex overflow-hidden rounded-lg bg-gray-100 p-1">
       {viewModes.map((viewMode) => (
@@ -28,7 +28,7 @@ export function ViewModeSelector({ mode, onChange }: Props) {
           title={viewMode.label}
           aria-label={viewMode.label}
           onClick={() => onChange(viewMode.value)}
-          className={`flex items-center gap-1.5 rounded-md px-2 sm:px-3 py-1.5 text-sm font-medium transition-all ${
+          className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium transition-all sm:px-3 ${
             mode === viewMode.value
               ? 'bg-white text-indigo-600 shadow-sm'
               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
@@ -40,4 +40,4 @@ export function ViewModeSelector({ mode, onChange }: Props) {
       ))}
     </div>
   );
-}
+};

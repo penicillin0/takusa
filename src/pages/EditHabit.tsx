@@ -4,14 +4,14 @@ import { supabase } from '../lib/supabase';
 import { HabitForm } from '../components/HabitForm';
 import type { Habit } from '../types/habit';
 
-export default function EditHabit() {
+const EditHabit = () => {
   const { id } = useParams<{ id: string }>();
   const [habit, setHabit] = useState<Habit | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchHabit() {
+    const fetchHabit = async () => {
       try {
         if (!id) return;
         const { data, error } = await supabase
@@ -27,7 +27,7 @@ export default function EditHabit() {
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchHabit();
   }, [id]);
@@ -53,4 +53,6 @@ export default function EditHabit() {
   }
 
   return <HabitForm habit={habit} mode="edit" />;
-}
+};
+
+export default EditHabit;

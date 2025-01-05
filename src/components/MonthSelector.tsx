@@ -7,7 +7,7 @@ type Props = {
   onChange: (date: Date) => void;
 };
 
-export function MonthSelector({ date, onChange }: Props) {
+export const MonthSelector = ({ date, onChange }: Props) => {
   const handlePrevMonth = () => {
     onChange(new Date(date.getFullYear(), date.getMonth() - 1));
   };
@@ -37,4 +37,4 @@ export function MonthSelector({ date, onChange }: Props) {
       </button>
     </div>
   );
-}
+};

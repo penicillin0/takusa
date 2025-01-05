@@ -1,5 +1,7 @@
 import { HabitForm } from '../components/HabitForm';
 
-export default function NewHabit() {
+const NewHabit = () => {
   return <HabitForm mode="create" />;
-}
+};
+
+export default NewHabit;

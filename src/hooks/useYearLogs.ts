@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { startOfYear, endOfYear } from 'date-fns';
 import { supabase } from '../lib/supabase';
 
-async function fetchYearLogs(habitId: string, date: Date) {
+const fetchYearLogs = async (habitId: string, date: Date) => {
   const start = startOfYear(date);
   const end = endOfYear(date);
 
@@ -15,9 +15,9 @@ async function fetchYearLogs(habitId: string, date: Date) {
 
   if (error) throw error;
   return data;
-}
+};
 
-export function useYearLogs(habitId: string, date: Date) {
+export const useYearLogs = (habitId: string, date: Date) => {
   const {
     data: logs = [],
     isLoading: loading,
@@ -28,4 +28,4 @@ export function useYearLogs(habitId: string, date: Date) {
   });
 
   return { logs, loading, error };
-}
+};

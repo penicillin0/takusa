@@ -9,7 +9,7 @@ type Props = {
   date: Date;
 };
 
-export function MonthView({ habits, date }: Props) {
+export const MonthView = ({ habits, date }: Props) => {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {habits.map((habit) => (
@@ -17,14 +17,14 @@ export function MonthView({ habits, date }: Props) {
       ))}
     </div>
   );
-}
+};
 
 type HabitCardWithLogsProps = {
   habit: Habit;
   date: Date;
 };
 
-function HabitCardWithLogs({ habit, date }: HabitCardWithLogsProps) {
+const HabitCardWithLogs = ({ habit, date }: HabitCardWithLogsProps) => {
   const { logs, loading, error } = useHabitLogs(habit.id, date);
   const mutation = useHabitMutation(habit.id);
 
@@ -53,4 +53,4 @@ function HabitCardWithLogs({ habit, date }: HabitCardWithLogsProps) {
       onLogUpdate={handleLogUpdate}
     />
   );
-}
+};

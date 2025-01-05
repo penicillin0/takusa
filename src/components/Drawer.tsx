@@ -28,7 +28,7 @@ type MenuItem = {
   onClick: () => void;
 };
 
-export function Drawer({ isOpen, onClose }: Props) {
+export const Drawer = ({ isOpen, onClose }: Props) => {
   const navigate = useNavigate();
   const { setUser } = useUser();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -250,4 +250,4 @@ export function Drawer({ isOpen, onClose }: Props) {
       </Modal>
     </>
   );
-}
+};

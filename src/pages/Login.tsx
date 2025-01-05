@@ -3,7 +3,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { Footer } from '../components/Footer';
 import { supabase } from '../lib/supabase';
 
-export default function Login() {
+const Login = () => {
   const from = new URL(window.location.href).searchParams.get('from');
   const isFromWebView = from === 'webview';
 
@@ -29,20 +29,20 @@ export default function Login() {
                     brandAccent: '#EC4899',
                   },
                   fontSizes: {
-                    baseButtonSize: "14px"
+                    baseButtonSize: '14px',
                   },
                   borderWidths: {
                     buttonBorderWidth: '0px',
                   },
                   radii: {
-                    borderRadiusButton: "12px",
-                    inputBorderRadius: "12px",
-                  }
+                    borderRadiusButton: '12px',
+                    inputBorderRadius: '12px',
+                  },
                 },
               },
             }}
             // MEMO: WebView での動作を考慮して Google ログインを無効化
-            providers={isFromWebView ? [] : ["google"]}
+            providers={isFromWebView ? [] : ['google']}
             localization={{
               variables: {
                 sign_in: {
@@ -50,21 +50,21 @@ export default function Login() {
                   password_label: 'パスワード',
                   button_label: 'ログイン',
                   link_text: 'ログインはこちら！',
-                  email_input_placeholder: 'example@example.com'
+                  email_input_placeholder: 'example@example.com',
                 },
                 sign_up: {
                   email_label: 'メールアドレス',
                   password_label: 'パスワード',
                   button_label: '新規登録',
                   link_text: 'アカウントをお持ちでないですか？',
-                  email_input_placeholder: 'example@example.com'
+                  email_input_placeholder: 'example@example.com',
                 },
                 forgotten_password: {
                   email_label: 'メールアドレス',
                   link_text: 'パスワードを忘れましたか？',
                   button_label: 'リセット',
-                  email_input_placeholder: 'example@example.com'
-                }
+                  email_input_placeholder: 'example@example.com',
+                },
               },
             }}
           />
@@ -73,4 +73,6 @@ export default function Login() {
       <Footer />
     </div>
   );
-}
+};
+
+export default Login;

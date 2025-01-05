@@ -6,7 +6,7 @@ type Props = {
   y: number;
 };
 
-export function Confetti({ x, y }: Props) {
+export const Confetti = ({ x, y }: Props) => {
   const called = useRef(false);
 
   const fireConfetti = useCallback(() => {
@@ -30,4 +30,4 @@ export function Confetti({ x, y }: Props) {
   }, [fireConfetti]);
 
   return null;
-}
+};
