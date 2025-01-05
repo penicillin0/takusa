@@ -45,7 +45,6 @@ const testimonials = [
   },
 ];
 
- 
 // const stats = [
 //   { icon: <Users />, value: '10,000+', label: 'ユーザー' },
 //   { icon: <CheckCircle />, value: '100万+', label: '達成記録' },
@@ -158,7 +157,7 @@ const Index = () => {
                   className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-pink-600 px-8 py-4 text-lg font-medium text-white shadow-lg transition-opacity hover:opacity-90 hover:shadow-xl"
                 >
                   無料で始める
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-5 w-5 animate-[bounce-x_1s_ease-in-out_infinite]" />
                 </Link>
               </div>
               <div className="relative">
@@ -327,7 +326,7 @@ const Index = () => {
               className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-pink-600 px-8 py-4 text-lg font-medium text-white shadow-lg transition-opacity hover:opacity-90 hover:shadow-xl"
             >
               無料で始める
-              <ArrowRight className="h-5 w-5" />
+              <ArrowRight className="h-5 w-5 animate-[bounce-x_1s_ease-in-out_infinite]" />
             </Link>
           </div>
         </section>
@@ -339,3 +338,13 @@ const Index = () => {
 };
 
 export default Index;
+
+// Tailwind CSS アニメーションのキーフレーム
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes bounce-x {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(25%); }
+  }
+`;
+document.head.appendChild(style);
