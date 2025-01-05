@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useState } from 'react';
 import { Modal } from './Modal';
+import { useUser } from '../contexts/UserContext';
 
 type Props = {
   isOpen: boolean;
@@ -28,6 +29,7 @@ type MenuItem = {
 
 export function Drawer({ isOpen, onClose }: Props) {
   const navigate = useNavigate();
+  const { setUser } = useUser();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -55,6 +57,7 @@ export function Drawer({ isOpen, onClose }: Props) {
       if (error) throw error;
 
       setShowDeleteModal(false);
+      setUser(null);
       setShowSuccessModal(true);
     } catch (error) {
       console.error(error);

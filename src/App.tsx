@@ -6,11 +6,14 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import NewHabit from './pages/NewHabit';
 import EditHabit from './pages/EditHabit';
+import { UserProvider } from './contexts/UserContext';
 import type { User } from '@supabase/supabase-js';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  console.log('user', user);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -39,30 +42,32 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/dashboard" /> : <Login />}
-        />
-        <Route
-          path="/dashboard"
-          element={user ? <Dashboard /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/habits/new"
-          element={user ? <NewHabit /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/habits/:id/edit"
-          element={user ? <EditHabit /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/"
-          element={user ? <Navigate to="/dashboard" /> : <Index />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider value={{ user, setUser }}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/dashboard" /> : <Login />}
+          />
+          <Route
+            path="/dashboard"
+            element={user ? <Dashboard /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/habits/new"
+            element={user ? <NewHabit /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/habits/:id/edit"
+            element={user ? <EditHabit /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/"
+            element={user ? <Navigate to="/dashboard" /> : <Index />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 
