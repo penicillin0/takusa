@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { startOfYear, endOfYear, eachMonthOfInterval, format } from 'date-fns';
+import {
+  startOfYear,
+  endOfYear,
+  eachMonthOfInterval,
+  format,
+  isSameYear,
+  isAfter,
+} from 'date-fns';
 import { ja } from 'date-fns/locale';
 import { useYearLogs } from '../hooks/useYearLogs';
 import { useHabitMutation } from '../hooks/useHabitMutation';
@@ -69,6 +76,10 @@ function YearCard({ habit, date, months }: YearCardProps) {
   const isCompletedToday = initialLogs.some(
     (log) => log.date === format(new Date(), 'yyyy-MM-dd')
   );
+  const now = new Date();
+  const isCurrentYear = isSameYear(date, new Date());
+  const isFutureYear = isAfter(startOfYear(date), now);
+  const showAchievementButton = isCurrentYear;
 
   if (loading) {
     return <YearCardSkeleton />;
@@ -127,20 +138,33 @@ function YearCard({ habit, date, months }: YearCardProps) {
 
       <button
         onClick={(e) => {
-          handleLogUpdate(e);
+          if (showAchievementButton) {
+            handleLogUpdate(e);
+          }
         }}
-        disabled={isUpdating}
+        disabled={isUpdating || !showAchievementButton}
         className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 transition-colors disabled:opacity-50 ${
           isCompletedToday
             ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            : 'text-white hover:opacity-90'
+            : showAchievementButton
+              ? 'text-white hover:opacity-90'
+              : 'bg-gray-100 text-gray-500'
         }`}
         style={{
-          backgroundColor: isCompletedToday ? undefined : habit.color,
+          backgroundColor:
+            isCompletedToday || !showAchievementButton
+              ? undefined
+              : habit.color,
         }}
       >
         <Check className="h-5 w-5" />
-        {isCompletedToday ? '達成済み' : '今日の達成を記録'}
+        {!showAchievementButton
+          ? isFutureYear
+            ? '未来の年は記録できません'
+            : '過去の年は記録できません'
+          : isCompletedToday
+            ? '達成済み'
+            : '今日の達成を記録'}
       </button>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react';
-import { format } from 'date-fns';
+import { format, isSameMonth, isAfter, startOfMonth } from 'date-fns';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HabitCalendar } from './HabitCalendar';
@@ -48,6 +48,10 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
   const isCompletedToday = logs.some(
     (log) => log.date === format(new Date(), 'yyyy-MM-dd')
   );
+  const now = new Date();
+  const isCurrentMonth = isSameMonth(date, new Date());
+  const isFutureMonth = isAfter(startOfMonth(date), now);
+  const showAchievementButton = isCurrentMonth;
 
   return (
     <div
@@ -70,19 +74,30 @@ export function HabitCard({ habit, logs, date, onLogUpdate }: Props) {
       <HabitCalendar color={habit.color} date={date} logs={logs} />
 
       <button
-        onClick={toggleToday}
-        disabled={loading}
+        onClick={showAchievementButton ? toggleToday : undefined}
+        disabled={loading || !showAchievementButton}
         className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 transition-colors disabled:opacity-50 ${
           isCompletedToday
             ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            : 'text-white hover:opacity-90'
+            : showAchievementButton
+              ? 'text-white hover:opacity-90'
+              : 'bg-gray-100 text-gray-500'
         }`}
         style={{
-          backgroundColor: isCompletedToday ? undefined : habit.color,
+          backgroundColor:
+            isCompletedToday || !showAchievementButton
+              ? undefined
+              : habit.color,
         }}
       >
         <Check className="h-5 w-5" />
-        {isCompletedToday ? '達成済み' : '今日の達成を記録'}
+        {!showAchievementButton
+          ? isFutureMonth
+            ? '未来の月は記録できません'
+            : '過去の月は記録できません'
+          : isCompletedToday
+            ? '達成済み'
+            : '今日の達成を記録'}
       </button>
     </div>
   );
