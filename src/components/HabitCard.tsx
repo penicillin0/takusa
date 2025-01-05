@@ -6,6 +6,7 @@ import { HabitCalendar } from './HabitCalendar';
 import { Confetti } from './Confetti';
 import type { Habit, HabitLog } from '../types/habit';
 import { useSettings } from '../contexts/SettingsContext';
+import { is } from 'date-fns/locale';
 
 type Props = {
   habit: Habit;
@@ -20,6 +21,10 @@ export const HabitCard = ({ habit, logs, date, onLogUpdate }: Props) => {
   const [confettiPosition, setConfettiPosition] = useState({ x: 0, y: 0 });
   const navigate = useNavigate();
   const { settings } = useSettings();
+
+  const isCompletedToday = logs.some(
+    (log) => log.date === format(new Date(), 'yyyy-MM-dd')
+  );
 
   const handleClick = () => {
     navigate(`/habits/${habit.id}/edit`);
@@ -44,15 +49,12 @@ export const HabitCard = ({ habit, logs, date, onLogUpdate }: Props) => {
       setLoading(false);
 
       // Webview からアプリへ通知
-      if (window.ReactNativeWebView) {
+      if (window.ReactNativeWebView && !isCompletedToday) {
         window.ReactNativeWebView.postMessage('appReviewRequest');
       }
     }
   };
 
-  const isCompletedToday = logs.some(
-    (log) => log.date === format(new Date(), 'yyyy-MM-dd')
-  );
   const now = new Date();
   const isCurrentMonth = isSameMonth(date, new Date());
   const isFutureMonth = isAfter(startOfMonth(date), now);
