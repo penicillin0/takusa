@@ -14,10 +14,15 @@ import { useSettings } from '../contexts/SettingsContext';
 const Dashboard = () => {
   const { settings } = useSettings();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState<ViewMode>(settings.defaultViewMode);
+  const [viewModeInScreen, setViewModeInScreen] = useState<ViewMode>('month');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const { habits, loading: habitsLoading } = useHabits();
+
+  // FIXME: useEffect を使わないようにしたい
+  useEffect(() => {
+    setViewModeInScreen(settings.defaultViewMode);
+  }, [settings.defaultViewMode]);
 
   useEffect(() => {
     const checkNewUser = async () => {
@@ -50,7 +55,7 @@ const Dashboard = () => {
       // 年表示から月表示に切り替える場合は当月の状態に
       setCurrentDate(new Date());
     }
-    setViewMode(newMode);
+    setViewModeInScreen(newMode);
   };
 
   if (habitsLoading) {
@@ -71,12 +76,12 @@ const Dashboard = () => {
       <Header
         date={currentDate}
         onDateChange={setCurrentDate}
-        viewMode={viewMode}
+        viewMode={viewModeInScreen}
         onViewModeChange={handleViewModeChange}
         onMenuClick={() => setIsDrawerOpen(true)}
       />
       <main className="mx-auto flex-1 px-4 py-8 pb-16 sm:px-6 lg:px-8">
-        {viewMode === 'month' ? (
+        {viewModeInScreen === 'month' ? (
           <MonthView habits={habits} date={currentDate} />
         ) : (
           <YearView habits={habits} date={currentDate} />
